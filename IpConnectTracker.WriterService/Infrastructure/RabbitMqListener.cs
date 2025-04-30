@@ -26,7 +26,7 @@ public sealed class RabbitMqListener : BackgroundService
         _logger = logger;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -39,15 +39,15 @@ public sealed class RabbitMqListener : BackgroundService
                 ConsumerDispatchConcurrency = 1
             };
 
-            _connection = await factory.CreateConnectionAsync(stoppingToken);
-            _channel = await _connection.CreateChannelAsync(options: null, cancellationToken: stoppingToken);
+            _connection = await factory.CreateConnectionAsync(cancellationToken);
+            _channel = await _connection.CreateChannelAsync(options: null, cancellationToken: cancellationToken);
 
             await _channel.QueueDeclareAsync(
                 queue: _options.QueueName,
                 durable: true,
                 exclusive: false,
                 autoDelete: false,
-                cancellationToken: stoppingToken);
+                cancellationToken: cancellationToken);
 
             var consumer = new RabbitMqWorkerConsumer(_logger, _channel, _worker);
 
@@ -55,11 +55,11 @@ public sealed class RabbitMqListener : BackgroundService
                 queue: _options.QueueName,
                 autoAck: false,
                 consumer: consumer,
-                cancellationToken: stoppingToken);
+                cancellationToken: cancellationToken);
 
             _logger.LogInformation("RabbitMQ listener started on queue {Queue}", _options.QueueName);
 
-            await Task.Delay(Timeout.Infinite, stoppingToken);
+            await Task.Delay(Timeout.Infinite, cancellationToken);
         }
         catch (OperationCanceledException)
         {
