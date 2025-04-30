@@ -33,7 +33,7 @@ public class DependencyInjectionTests
 
                 services.AddSingleton<Worker>();
                 services.AddHostedService(sp => sp.GetRequiredService<Worker>());
-                services.AddHostedService<RabbitMqListener>();
+                services.AddSingleton<RabbitMqListener>();
             })
             .Build();
 
