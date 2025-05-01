@@ -1,14 +1,14 @@
 using System.Text;
 using DotNet.Testcontainers.Builders;
-using IpConnectTracker.WriterService;
 using IpConnectTracker.WriterService.Config;
+using IpConnectTracker.WriterService.DataAccess.Abstractions;
 using IpConnectTracker.WriterService.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Moq;
 using RabbitMQ.Client;
 using Testcontainers.RabbitMq;
-using Xunit;
 
 namespace IpConnectTracker.WriterService.IntegrationTests;
 
@@ -42,6 +42,13 @@ public class RabbitMqContainerTests : IAsyncLifetime
         const int rabbitMqPort = 5672;
         var testLoggerProvider = new TestLoggerProvider();
 
+        var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
+        mockConnectionEventRepository.Setup(r => r.StoreAsync(It.IsAny<long>(), 
+                It.IsAny<string>(), 
+                It.IsAny<DateTime>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        
         var host = Host.CreateDefaultBuilder()
             .ConfigureLogging(logging =>
             {
@@ -62,6 +69,8 @@ public class RabbitMqContainerTests : IAsyncLifetime
                 services.AddSingleton<MessageProcessorService>();
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
                 services.AddHostedService<RabbitMqListenerService>();
+                
+                services.AddScoped<IConnectionEventRepository>(_ => mockConnectionEventRepository.Object);
             })
             .Build();
 
@@ -81,8 +90,9 @@ public class RabbitMqContainerTests : IAsyncLifetime
 
         await channel.QueueDeclareAsync(queue: queueName, durable: true, exclusive: false, autoDelete: false);
 
-        var userName = "testUser";
-        var message = $"{userName},127.0.0.1";
+        long userId = 1234;
+        string ipAddress = "127.0.0.1";
+        var message = $"{userId},{ipAddress}";
         
         var messageBody = Encoding.UTF8.GetBytes(message);
         await channel.BasicPublishAsync(exchange: "", routingKey: queueName, body: messageBody);
@@ -95,9 +105,13 @@ public class RabbitMqContainerTests : IAsyncLifetime
             await Task.Delay(100);
         }
 
-        Assert.Contains(logs, log => log.Contains("Processed message:") && log.Contains(userName));
-
+        mockConnectionEventRepository.Verify(repo => repo.StoreAsync(
+                It.Is<long>(x => x == userId),
+                It.Is<string>(x => x == ipAddress),
+                It.IsAny<DateTime>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+            
         await host.StopAsync();
     }
-
 }
