@@ -1,4 +1,12 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: iptracker-rabbit
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Web UI
+
   postgres:
     image: postgres:17.4
     container_name: iptracker-db
