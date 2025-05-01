@@ -12,11 +12,20 @@ public class MessageProcessorServiceLoadTests
     [Fact(Timeout = 60_000)]
     public async Task EnqueueAsync_Around50000MessagesPer30Seconds_ShouldProcessAllMessages()
     {
+        var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
+        mockConnectionEventRepository.Setup(r => r.StoreAsync(It.IsAny<long>(), 
+                It.IsAny<string>(), 
+                It.IsAny<DateTime>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
                 services.AddSingleton<MessageProcessorService>();
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
+                
+                services.AddScoped<IConnectionEventRepository>(_ => mockConnectionEventRepository.Object);
             })
             .Build();
 
@@ -26,7 +35,7 @@ public class MessageProcessorServiceLoadTests
         
         var scenario = Scenario.Create("message-processor-service-load", async context =>
             {
-                await messageProcessorService.EnqueueAsync($"message-{context.InvocationNumber}");
+                await messageProcessorService.EnqueueAsync($"{context.InvocationNumber}, 127.0.0.1");
                 return Response.Ok();
             })
             .WithLoadSimulations(Simulation.InjectRandom(minRate:2000, maxRate:5000, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromSeconds(30)));
