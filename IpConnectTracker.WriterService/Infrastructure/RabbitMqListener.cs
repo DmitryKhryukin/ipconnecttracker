@@ -8,7 +8,7 @@ public sealed class RabbitMqListener : BackgroundService
 {
     private readonly ILogger<RabbitMqListener> _logger;
     private readonly RabbitOptions _options;
-    private readonly Worker _worker;
+    private readonly MessageProcessorService _messageProcessorService;
     
     private IConnection? _connection;
     private IChannel? _channel;
@@ -17,12 +17,12 @@ public sealed class RabbitMqListener : BackgroundService
     public RabbitMqListener(
         ILogger<RabbitMqListener> logger,
         IOptions<RabbitOptions> options,
-        Worker worker
+        MessageProcessorService messageProcessorService
         )
     {
         
         _options = options.Value;
-        _worker = worker;
+        _messageProcessorService = messageProcessorService;
         _logger = logger;
     }
 
@@ -49,7 +49,7 @@ public sealed class RabbitMqListener : BackgroundService
                 autoDelete: false,
                 cancellationToken: cancellationToken);
 
-            var consumer = new RabbitMqWorkerConsumer(_logger, _channel, _worker);
+            var consumer = new RabbitMqWorkerConsumer(_logger, _channel, _messageProcessorService);
 
             _consumerTag = await _channel.BasicConsumeAsync(
                 queue: _options.QueueName,

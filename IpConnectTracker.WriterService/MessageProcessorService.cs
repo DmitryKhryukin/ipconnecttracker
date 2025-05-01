@@ -3,13 +3,13 @@ using IpConnectTracker.WriterService.DataAccess.Abstractions;
 
 namespace IpConnectTracker.WriterService;
 
-public class Worker : BackgroundService
+public class MessageProcessorService : BackgroundService
 {
-    private readonly ILogger<Worker> _logger;
+    private readonly ILogger<MessageProcessorService> _logger;
     private readonly Channel<string> _channel;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory)
+    public MessageProcessorService(ILogger<MessageProcessorService> logger, IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;

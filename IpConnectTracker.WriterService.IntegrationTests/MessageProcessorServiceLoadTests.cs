@@ -4,7 +4,7 @@ using NBomber.CSharp;
 
 namespace IpConnectTracker.WriterService.IntegrationTests;
 
-public class WorkerLoadTests
+public class MessageProcessorServiceLoadTests
 {
     [Fact(Timeout = 60_000)]
     public async Task EnqueueAsync_Around50000MessagesPer30Seconds_ShouldProcessAllMessages()
@@ -12,18 +12,18 @@ public class WorkerLoadTests
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.AddSingleton<Worker>();
-                services.AddHostedService(sp => sp.GetRequiredService<Worker>());
+                services.AddSingleton<MessageProcessorService>();
+                services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
             })
             .Build();
 
         await host.StartAsync();
 
-        var worker = host.Services.GetRequiredService<Worker>();
+        var messageProcessorService = host.Services.GetRequiredService<MessageProcessorService>();
         
-        var scenario = Scenario.Create("worker-load", async context =>
+        var scenario = Scenario.Create("message-processor-service-load", async context =>
             {
-                await worker.EnqueueAsync($"message-{context.InvocationNumber}");
+                await messageProcessorService.EnqueueAsync($"message-{context.InvocationNumber}");
                 return Response.Ok();
             })
             .WithLoadSimulations(Simulation.InjectRandom(minRate:2000, maxRate:5000, interval: TimeSpan.FromSeconds(1), during: TimeSpan.FromSeconds(30)));

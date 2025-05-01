@@ -36,7 +36,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
     public async Task DisposeAsync() => await _rabbitMqContainer.DisposeAsync();
 
     [Fact(Timeout = 60_000)]
-    public async Task Worker_Should_Process_Message_From_RabbitMq_Container()
+    public async Task MessageProcessorService_Should_Process_Message_From_RabbitMq_Container()
     {
         const string queueName = "ip_connects_test";
         const int rabbitMqPort = 5672;
@@ -59,8 +59,8 @@ public class RabbitMqContainerTests : IAsyncLifetime
                     opts.QueueName = queueName;
                 });
 
-                services.AddSingleton<Worker>();
-                services.AddHostedService(sp => sp.GetRequiredService<Worker>());
+                services.AddSingleton<MessageProcessorService>();
+                services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
                 services.AddHostedService<RabbitMqListener>();
             })
             .Build();

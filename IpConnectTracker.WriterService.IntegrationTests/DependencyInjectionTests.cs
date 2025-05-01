@@ -8,7 +8,7 @@ namespace IpConnectTracker.WriterService.IntegrationTests;
 public class DependencyInjectionTests
 {
     [Fact]
-    public async Task Worker_ShouldBeSameInstance_ForWorkerAndRabbitMqListener()
+    public async Task MessageProcessorService_ShouldBeSameInstance_ForMessageProcessorServiceAndRabbitMqListener()
     {
         var fakeOptions = new RabbitOptions
         {
@@ -31,23 +31,23 @@ public class DependencyInjectionTests
                     opts.Password = fakeOptions.Password;
                 });
 
-                services.AddSingleton<Worker>();
-                services.AddHostedService(sp => sp.GetRequiredService<Worker>());
+                services.AddSingleton<MessageProcessorService>();
+                services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
                 services.AddSingleton<RabbitMqListener>();
             })
             .Build();
 
         await host.StartAsync();
 
-        var worker = host.Services.GetRequiredService<Worker>();
+        var messageProcessorService = host.Services.GetRequiredService<MessageProcessorService>();
         var rabbit = host.Services.GetRequiredService<RabbitMqListener>();
 
-        var workerField = typeof(RabbitMqListener)
-            .GetField("_worker", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var messageProcessorServiceField = typeof(RabbitMqListener)
+            .GetField("_messageProcessorService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        var rabbitWorker = workerField?.GetValue(rabbit);
+        var rabbitMessageProcessorService = messageProcessorServiceField?.GetValue(rabbit);
 
-        Assert.Same(worker, rabbitWorker);
+        Assert.Same(messageProcessorService, rabbitMessageProcessorService);
 
         await host.StopAsync();
     }

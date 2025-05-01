@@ -6,12 +6,12 @@ namespace IpConnectTracker.WriterService.Infrastructure;
 public class RabbitMqWorkerConsumer : AsyncDefaultBasicConsumer
 {
     private readonly ILogger _logger;
-    private readonly Worker _worker;
+    private readonly MessageProcessorService _messageProcessorService;
 
-    public RabbitMqWorkerConsumer(ILogger logger, IChannel channel, Worker worker) : base(channel)
+    public RabbitMqWorkerConsumer(ILogger logger, IChannel channel, MessageProcessorService messsageProcessorService) : base(channel)
     {
         _logger = logger;
-        _worker = worker;
+        _messageProcessorService = messsageProcessorService;
     }
 
     public override async Task HandleBasicDeliverAsync(
@@ -29,7 +29,7 @@ public class RabbitMqWorkerConsumer : AsyncDefaultBasicConsumer
             var message = Encoding.UTF8.GetString(body.Span);
             _logger.LogDebug("Received message: {Message}", message);
 
-            await _worker.EnqueueAsync(message, cancellationToken);
+            await _messageProcessorService.EnqueueAsync(message, cancellationToken);
             await Channel.BasicAckAsync(deliveryTag, false, cancellationToken);
         }
         catch (Exception ex)
