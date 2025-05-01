@@ -3,6 +3,7 @@ using DotNet.Testcontainers.Builders;
 using IpConnectTracker.WriterService.Config;
 using IpConnectTracker.WriterService.DataAccess.Abstractions;
 using IpConnectTracker.WriterService.Infrastructure;
+using IpConnectTracker.WriterService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

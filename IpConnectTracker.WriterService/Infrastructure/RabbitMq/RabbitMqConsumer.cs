@@ -1,7 +1,8 @@
 using System.Text;
+using IpConnectTracker.WriterService.Services;
 using RabbitMQ.Client;
 
-namespace IpConnectTracker.WriterService.Infrastructure;
+namespace IpConnectTracker.WriterService.Infrastructure.RabbitMq;
 
 public class RabbitMqConsumer : AsyncDefaultBasicConsumer
 {

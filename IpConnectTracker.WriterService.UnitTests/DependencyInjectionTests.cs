@@ -1,9 +1,9 @@
 using IpConnectTracker.WriterService.Config;
-using IpConnectTracker.WriterService.Infrastructure;
+using IpConnectTracker.WriterService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace IpConnectTracker.WriterService.IntegrationTests;
+namespace IpConnectTracker.WriterService.UnitTests;
 
 public class DependencyInjectionTests
 {

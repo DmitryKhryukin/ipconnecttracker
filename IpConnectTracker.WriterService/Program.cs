@@ -4,6 +4,7 @@ using IpConnectTracker.WriterService.DataAccess.Abstractions;
 using IpConnectTracker.WriterService.DataAccess.PostgreSQL;
 using IpConnectTracker.WriterService.DataAccess.PostgreSQL.Config;
 using IpConnectTracker.WriterService.Infrastructure;
+using IpConnectTracker.WriterService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

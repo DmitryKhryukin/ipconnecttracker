@@ -1,4 +1,6 @@
-﻿namespace IpConnectTracker.WriterService.UnitTests;
+﻿using IpConnectTracker.WriterService.Helpers;
+
+namespace IpConnectTracker.WriterService.UnitTests.Helpers;
 
 public class MessageParserTests
 {

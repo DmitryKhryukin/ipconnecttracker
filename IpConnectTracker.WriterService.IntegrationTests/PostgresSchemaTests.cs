@@ -1,8 +1,10 @@
 using Dapper;
-using Npgsql;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
+using Npgsql;
+
+namespace IpConnectTracker.WriterService.IntegrationTests;
 
 public class PostgresSchemaTests : IAsyncLifetime
 {

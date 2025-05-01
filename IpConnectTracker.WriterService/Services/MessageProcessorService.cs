@@ -1,7 +1,8 @@
 using System.Threading.Channels;
 using IpConnectTracker.WriterService.DataAccess.Abstractions;
+using IpConnectTracker.WriterService.Helpers;
 
-namespace IpConnectTracker.WriterService;
+namespace IpConnectTracker.WriterService.Services;
 
 public class MessageProcessorService : BackgroundService
 {

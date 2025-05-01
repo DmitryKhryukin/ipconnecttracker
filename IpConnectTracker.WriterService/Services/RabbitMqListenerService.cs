@@ -1,8 +1,10 @@
 using IpConnectTracker.WriterService.Config;
+using IpConnectTracker.WriterService.Infrastructure;
+using IpConnectTracker.WriterService.Infrastructure.RabbitMq;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
-namespace IpConnectTracker.WriterService.Infrastructure;
+namespace IpConnectTracker.WriterService.Services;
 
 public sealed class RabbitMqListenerService : BackgroundService
 {

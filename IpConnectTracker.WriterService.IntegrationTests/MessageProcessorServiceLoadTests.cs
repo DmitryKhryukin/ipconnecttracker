@@ -1,5 +1,8 @@
+using IpConnectTracker.WriterService.DataAccess.Abstractions;
+using IpConnectTracker.WriterService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Moq;
 using NBomber.CSharp;
 
 namespace IpConnectTracker.WriterService.IntegrationTests;

@@ -1,4 +1,4 @@
-namespace IpConnectTracker.WriterService;
+namespace IpConnectTracker.WriterService.Helpers;
 
 public static class MessageParser
 {
