@@ -1,11 +1,7 @@
-using System.Threading.Tasks;
 using Dapper;
-using Docker.DotNet.Models;
 using Npgsql;
-using Xunit;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
-using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Networks;
 
 public class PostgresSchemaTests : IAsyncLifetime
