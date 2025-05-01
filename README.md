@@ -1,6 +1,7 @@
 How to run:
 
 docker compose up --build
+dotnet run --project IpConnectTracker.WriterService
 
 Pontetial issues:
 1. Error "IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations is not shared from the host and is not known to Docker"
