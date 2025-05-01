@@ -8,9 +8,9 @@ public static class CliArgumentsParser
     private const string QueueArg = "--queue";
     private const string RandomArg = "--random";
     private const string VerboseArg = "--verbose";
-    
-    private const int DefaultCount = 1000;
-    private const string DefaultQueue = "ip_connects";
+
+    public static int DefaultCount { get; } = 500000;
+    public static string DefaultQueue { get; } = "ip_connects";
     
     //TODO: tests
     public static CliOptions ParseArgs(string[] args)
