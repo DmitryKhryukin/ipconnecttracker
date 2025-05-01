@@ -61,7 +61,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
 
                 services.AddSingleton<MessageProcessorService>();
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
-                services.AddHostedService<RabbitMqListener>();
+                services.AddHostedService<RabbitMqListenerService>();
             })
             .Build();
 

@@ -3,12 +3,12 @@ using RabbitMQ.Client;
 
 namespace IpConnectTracker.WriterService.Infrastructure;
 
-public class RabbitMqWorkerConsumer : AsyncDefaultBasicConsumer
+public class RabbitMqConsumer : AsyncDefaultBasicConsumer
 {
     private readonly ILogger _logger;
     private readonly MessageProcessorService _messageProcessorService;
 
-    public RabbitMqWorkerConsumer(ILogger logger, IChannel channel, MessageProcessorService messsageProcessorService) : base(channel)
+    public RabbitMqConsumer(ILogger logger, IChannel channel, MessageProcessorService messsageProcessorService) : base(channel)
     {
         _logger = logger;
         _messageProcessorService = messsageProcessorService;

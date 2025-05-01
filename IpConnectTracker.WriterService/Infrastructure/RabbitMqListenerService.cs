@@ -4,9 +4,9 @@ using RabbitMQ.Client;
 
 namespace IpConnectTracker.WriterService.Infrastructure;
 
-public sealed class RabbitMqListener : BackgroundService
+public sealed class RabbitMqListenerService : BackgroundService
 {
-    private readonly ILogger<RabbitMqListener> _logger;
+    private readonly ILogger<RabbitMqListenerService> _logger;
     private readonly RabbitOptions _options;
     private readonly MessageProcessorService _messageProcessorService;
     
@@ -14,8 +14,8 @@ public sealed class RabbitMqListener : BackgroundService
     private IChannel? _channel;
     private string? _consumerTag;
 
-    public RabbitMqListener(
-        ILogger<RabbitMqListener> logger,
+    public RabbitMqListenerService(
+        ILogger<RabbitMqListenerService> logger,
         IOptions<RabbitOptions> options,
         MessageProcessorService messageProcessorService
         )
@@ -49,7 +49,7 @@ public sealed class RabbitMqListener : BackgroundService
                 autoDelete: false,
                 cancellationToken: cancellationToken);
 
-            var consumer = new RabbitMqWorkerConsumer(_logger, _channel, _messageProcessorService);
+            var consumer = new RabbitMqConsumer(_logger, _channel, _messageProcessorService);
 
             _consumerTag = await _channel.BasicConsumeAsync(
                 queue: _options.QueueName,

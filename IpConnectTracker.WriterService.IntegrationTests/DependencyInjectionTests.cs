@@ -33,19 +33,19 @@ public class DependencyInjectionTests
 
                 services.AddSingleton<MessageProcessorService>();
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
-                services.AddSingleton<RabbitMqListener>();
+                services.AddSingleton<RabbitMqListenerService>();
             })
             .Build();
 
         await host.StartAsync();
 
         var messageProcessorService = host.Services.GetRequiredService<MessageProcessorService>();
-        var rabbit = host.Services.GetRequiredService<RabbitMqListener>();
+        var rabbitMqListenerService = host.Services.GetRequiredService<RabbitMqListenerService>();
 
-        var messageProcessorServiceField = typeof(RabbitMqListener)
+        var messageProcessorServiceField = typeof(RabbitMqListenerService)
             .GetField("_messageProcessorService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
-        var rabbitMessageProcessorService = messageProcessorServiceField?.GetValue(rabbit);
+        var rabbitMessageProcessorService = messageProcessorServiceField?.GetValue(rabbitMqListenerService);
 
         Assert.Same(messageProcessorService, rabbitMessageProcessorService);
 

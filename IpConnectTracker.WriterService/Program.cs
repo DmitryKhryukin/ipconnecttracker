@@ -12,7 +12,7 @@ builder.Services.Configure<PostgresOptions>(builder.Configuration.GetSection("Po
 
 builder.Services.AddSingleton<MessageProcessorService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
-builder.Services.AddHostedService<RabbitMqListener>();
+builder.Services.AddHostedService<RabbitMqListenerService>();
 
 builder.Services.AddScoped<IConnectionEventRepository, PostgresConnectionEventRepository>();
 
