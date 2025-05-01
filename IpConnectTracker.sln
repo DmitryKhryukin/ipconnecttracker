@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.WriterServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.WriterService.IntegrationTests", "IpConnectTracker.WriterService.IntegrationTests\IpConnectTracker.WriterService.IntegrationTests.csproj", "{3F86EEE0-2007-4776-AB04-4AC889BE6DB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.WriterService.DataAccess.Abstractions", "IpConnectTracker.WriterService.DataAccess.Abstractions\IpConnectTracker.WriterService.DataAccess.Abstractions.csproj", "{5C708C36-7C72-4577-8122-4BEDE6FB308A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.WriterService.DataAccess.PostgreSQL", "IpConnectTracker.WriterService.DataAccess.PostgreSQL\IpConnectTracker.WriterService.DataAccess.PostgreSQL.csproj", "{68484D4B-2400-4F74-B002-11AA1A456582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{3F86EEE0-2007-4776-AB04-4AC889BE6DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F86EEE0-2007-4776-AB04-4AC889BE6DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F86EEE0-2007-4776-AB04-4AC889BE6DB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C708C36-7C72-4577-8122-4BEDE6FB308A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C708C36-7C72-4577-8122-4BEDE6FB308A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C708C36-7C72-4577-8122-4BEDE6FB308A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C708C36-7C72-4577-8122-4BEDE6FB308A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68484D4B-2400-4F74-B002-11AA1A456582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68484D4B-2400-4F74-B002-11AA1A456582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68484D4B-2400-4F74-B002-11AA1A456582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68484D4B-2400-4F74-B002-11AA1A456582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

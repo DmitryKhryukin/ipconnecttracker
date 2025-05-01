@@ -11,4 +11,9 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0"/>
         <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IpConnectTracker.WriterService.DataAccess.Abstractions\IpConnectTracker.WriterService.DataAccess.Abstractions.csproj" />
+      <ProjectReference Include="..\IpConnectTracker.WriterService.DataAccess.PostgreSQL\IpConnectTracker.WriterService.DataAccess.PostgreSQL.csproj" />
+    </ItemGroup>
 </Project>

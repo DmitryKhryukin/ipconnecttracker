@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:17.4
+    container_name: iptracker-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: iptracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway:11.8
+    container_name: iptracker-flyway
+    depends_on:
+      - postgres
+    volumes:
+      - ./src/IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations:/flyway/sql
+    command: >
+      -url=jdbc:postgresql://postgres:5432/iptracker
+      -user=app
+      -password=secret
+      migrate
+
+volumes:
+  pgdata:
