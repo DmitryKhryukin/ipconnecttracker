@@ -24,7 +24,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
     public RabbitMqContainerTests()
     {
         _rabbitMqContainer = new RabbitMqBuilder()
-            .WithImage("rabbitmq:3-management")
+            .WithImage("rabbitmq:3-management") // TODO: use the latest version?
             .WithPortBinding(TestPort, DefaultRabbitMqContainerPort)
             .WithUsername("guest")
             .WithPassword("guest")
