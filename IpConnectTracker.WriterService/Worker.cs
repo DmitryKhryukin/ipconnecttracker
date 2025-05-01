@@ -7,12 +7,12 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly Channel<string> _channel;
-    private readonly IConnectionEventRepository _repository;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public Worker(ILogger<Worker> logger, IConnectionEventRepository repository)
+    public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
-        _repository = repository;
+        _serviceScopeFactory = serviceScopeFactory;
 
         _channel = Channel.CreateBounded<string>(
             new BoundedChannelOptions(capacity: 10_000) // TODO: move to appsettings
@@ -32,6 +32,9 @@ public class Worker : BackgroundService
     {
         try
         {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var repository = scope.ServiceProvider.GetRequiredService<IConnectionEventRepository>();
+                
             await foreach (var message in _channel.Reader.ReadAllAsync(cancellationToken))
             {
                 if (!MessageParser.TryParse(message, out var userId, out var ip))
@@ -40,7 +43,7 @@ public class Worker : BackgroundService
                     return;
                 }
 
-                await _repository.StoreAsync(userId, ip, DateTime.UtcNow, cancellationToken);
+                await repository.StoreAsync(userId, ip, DateTime.UtcNow, cancellationToken);
                 _logger.LogDebug("Stored event for user {UserId} with IP {IP}", userId, ip);
             }
         }
