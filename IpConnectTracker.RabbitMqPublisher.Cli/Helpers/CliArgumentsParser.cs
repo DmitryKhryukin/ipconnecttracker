@@ -9,13 +9,17 @@ public static class CliArgumentsParser
     private const string RandomArg = "--random";
     private const string VerboseArg = "--verbose";
 
-    public static int DefaultCount { get; } = 500000;
+    public static int DefaultCount { get; } = 50000;
     public static string DefaultQueue { get; } = "ip_connects";
     
-    //TODO: tests
     public static CliOptions ParseArgs(string[] args)
     {
-        var options = new CliOptions();
+        var options = new CliOptions()
+        {
+            Count = DefaultCount,
+            Queue = DefaultQueue
+        };
+        
         int i = 0;
 
         while (i < args.Length)
