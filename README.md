@@ -1,16 +1,90 @@
-How to run:
+# IpConnectTracker – Local Development Setup
 
+This project uses Docker Compose to run:
+
+- PostgreSQL (with streaming replication: primary and replica)
+- RabbitMQ
+- Flyway for database migrations  
+- `WriterService`: a .NET Core backend that listens for incoming events and persists them to PostgreSQL.
+
+---
+
+## How to Run
+
+```bash
+# Stop and remove containers and volumes (clean start)
 docker compose down -v
+
+# (Optional) Clean up any lingering anonymous volumes
+docker volume prune -f
+
+# Build and start containers in the background
 docker compose up --build -d
+
+# Run the backend service
 dotnet run --project IpConnectTracker.WriterService
+```
 
-Pontetial issues:
-1. Error "IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations is not shared from the host and is not known to Docker"
+---
 
-Steps to fix on MacOS:
+## Potential Issues
 
-- Open Docker Desktop;
-- Go to Settings;
-- Navigate to Resources → File Sharing;
-- Click "Browse", select your project folder "../ipconnecttracker" and then the “+” button;
-- Click "Apply & Restart" button.
+### 1. Docker volume not shared on macOS
+
+**Error message:**
+```
+IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations is not shared from the host and is not known to Docker
+```
+
+**Solution:**
+
+1. Open Docker Desktop
+2. Go to `Settings → Resources → File Sharing`
+3. Click `Browse`, select your project folder (e.g., `../ipconnecttracker`)
+4. Click the “+” button to add it
+5. Click `Apply & Restart`
+
+---
+
+### 2. Permission issue with `copy_hba.sh`
+
+If PostgreSQL fails to initialize, ensure that the `copy_hba.sh` script is executable:
+
+```bash
+chmod +x ./postgres-config/copy_hba.sh
+```
+
+Run this once per machine or after cloning the repo to avoid permission issues during container startup.
+
+---
+
+### 3. PostgreSQL fails with “data directory exists but is not empty”
+
+This happens when the database volume exists but isn’t properly initialized (e.g., `pg_hba.conf` was placed in the data directory).
+
+**Fix:**
+
+```bash
+docker compose down -v
+docker volume prune -f
+```
+
+Then restart services:
+
+```bash
+docker compose up --build -d
+```
+
+---
+
+## ✅ After Setup
+
+Once everything is up and running, you should have:
+
+- ✅ **Primary PostgreSQL** available at `localhost:5432`
+- ✅ **Replica PostgreSQL** available at `localhost:5433`
+- ✅ **RabbitMQ Management UI** at [http://localhost:15672](http://localhost:15672)
+  - **Username:** `guest`
+  - **Password:** `guest`
+- ✅ **Flyway** automatically applies DB migrations from:
+  - `IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations`
