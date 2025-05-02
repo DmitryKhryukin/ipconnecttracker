@@ -1,5 +1,6 @@
 using System.Threading.Channels;
 using IpConnectTracker.WriterService.DataAccess.Abstractions;
+using IpConnectTracker.WriterService.DataAccess.Abstractions.Repository;
 using IpConnectTracker.WriterService.Helpers;
 
 namespace IpConnectTracker.WriterService.Services;

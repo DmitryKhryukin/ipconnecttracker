@@ -1,4 +1,4 @@
-namespace IpConnectTracker.WriterService.DataAccess.Abstractions;
+namespace IpConnectTracker.WriterService.DataAccess.Abstractions.Repository;
 
 public interface IConnectionEventRepository
 {

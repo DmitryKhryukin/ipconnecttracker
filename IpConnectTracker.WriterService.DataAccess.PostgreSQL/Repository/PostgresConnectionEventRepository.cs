@@ -1,16 +1,16 @@
 using Dapper;
-using IpConnectTracker.WriterService.DataAccess.Abstractions;
+using IpConnectTracker.WriterService.DataAccess.Abstractions.Repository;
 using IpConnectTracker.WriterService.DataAccess.PostgreSQL.Config;
 using Microsoft.Extensions.Options;
 using Npgsql;
 
-namespace IpConnectTracker.WriterService.DataAccess.PostgreSQL;
+namespace IpConnectTracker.WriterService.DataAccess.PostgreSQL.Repository;
 
 public class PostgresConnectionEventRepository : IConnectionEventRepository
 {
     private readonly string _connectionString;
 
-    public PostgresConnectionEventRepository(IOptions<PostgresOptions> options)
+    public PostgresConnectionEventRepository(IOptions<PostgresWriteOptions> options)
     {
         _connectionString = options.Value.ConnectionString;
     }

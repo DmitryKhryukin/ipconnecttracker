@@ -1,6 +1,6 @@
 namespace IpConnectTracker.WriterService.DataAccess.PostgreSQL.Config;
 
-public class PostgresOptions
+public class PostgresWriteOptions
 {
     public string ConnectionString { get; set; }
 }
