@@ -1,0 +1,17 @@
+@host = http://localhost:5109
+
+### ✅ Get users by IP prefix
+GET {{host}}/api/connectionevents/users/by-ip-prefix?prefix=31.214&skip=0&take=100
+Accept: application/json
+
+### ✅ Get IPs used by a user
+GET {{host}}/api/connectionevents/users/1234567/ips
+Accept: application/json
+
+### ✅ Get user's last connection
+GET {{host}}/api/connectionevents/users/1234567/latest
+Accept: application/json
+
+### ✅ Get last connection by IP
+GET {{host}}/api/connectionevents/ips/31.214.157.141/last-connection
+Accept: application/json

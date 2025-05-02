@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.RabbitMqPu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.RabbitMqPublisher.Cli.UnitTests", "IpConnectTracker.RabbitMqPublisher.Cli.UnitTests\IpConnectTracker.RabbitMqPublisher.Cli.UnitTests.csproj", "{4B88E16B-B916-4833-81D6-0D3C392D0719}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.ReaderService.Api", "IpConnectTracker.ReaderService.Api\IpConnectTracker.ReaderService.Api.csproj", "{D376E1E4-2EAF-4850-892F-AD604C73F7E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.ReaderService.DataAccess.Abstractions", "IpConnectTracker.ReaderService.DataAccess.Abstractions\IpConnectTracker.ReaderService.DataAccess.Abstractions.csproj", "{A45BEC76-CB39-42A4-AC3C-DD7866749A74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.ReaderService.DataAccess.PostgreSQL", "IpConnectTracker.ReaderService.DataAccess.PostgreSQL\IpConnectTracker.ReaderService.DataAccess.PostgreSQL.csproj", "{693EAB3E-8485-43FF-85D4-59CA0F563D08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +54,17 @@ Global
 		{4B88E16B-B916-4833-81D6-0D3C392D0719}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B88E16B-B916-4833-81D6-0D3C392D0719}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B88E16B-B916-4833-81D6-0D3C392D0719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D376E1E4-2EAF-4850-892F-AD604C73F7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D376E1E4-2EAF-4850-892F-AD604C73F7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D376E1E4-2EAF-4850-892F-AD604C73F7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D376E1E4-2EAF-4850-892F-AD604C73F7E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45BEC76-CB39-42A4-AC3C-DD7866749A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45BEC76-CB39-42A4-AC3C-DD7866749A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45BEC76-CB39-42A4-AC3C-DD7866749A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45BEC76-CB39-42A4-AC3C-DD7866749A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693EAB3E-8485-43FF-85D4-59CA0F563D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693EAB3E-8485-43FF-85D4-59CA0F563D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693EAB3E-8485-43FF-85D4-59CA0F563D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693EAB3E-8485-43FF-85D4-59CA0F563D08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
