@@ -5,7 +5,8 @@ This project uses Docker Compose to run:
 - PostgreSQL (with streaming replication: primary and replica)
 - RabbitMQ
 - Flyway for database migrations  
-- `WriterService`: a .NET Core backend that listens for incoming events and persists them to PostgreSQL.
+- `WriterService`: a .NET Core backend that listens for incoming events and writes them to PostgreSQL.
+- `ReaderService.Api`: a .NET Web API for querying connection history
 
 ---
 
@@ -15,15 +16,11 @@ This project uses Docker Compose to run:
 # Stop and remove containers and volumes (clean start)
 docker compose down -v
 
-# (Optional) Clean up any lingering anonymous volumes
-docker volume prune -f
+# Build and start containers
+docker compose up --build
 
-# Build and start containers in the background
+# Or build and start containers in the background
 docker compose up --build -d
-
-# Run the backend service
-dotnet run --project IpConnectTracker.WriterService
-```
 
 ---
 
@@ -67,11 +64,6 @@ This happens when the database volume exists but isn’t properly initialized (e
 ```bash
 docker compose down -v
 docker volume prune -f
-```
-
-Then restart services:
-
-```bash
 docker compose up --build -d
 ```
 
@@ -105,3 +97,22 @@ Once everything is up and running, you should have:
 | UI URL                     | Username | Password |
 |---------------------------|----------|----------|
 | [http://localhost:15672](http://localhost:15672) | `guest`   | `guest`   |
+
+---
+
+## 🔍 ReaderService API
+
+Project: `IpConnectTracker.ReaderService.Api`
+
+Base URL (by default): `http://localhost:5109`
+
+### 📘 Endpoints
+
+| HTTP Method | URL | Description |
+|-------------|-----|-------------|
+| `GET` | `/api/connection-events/users/by-ip-prefix?prefix=192&skip=0&take=100` | Find users by IP prefix |
+| `GET` | `/api/connection-events/users/{userId}/ips` | Get all IPs used by the user |
+| `GET` | `/api/connection-events/users/{userId}/latest` | Get the last connection of a user (IP + timestamp) |
+| `GET` | `/api/connection-events/users/{userId}/latest-by-ip?ip=192.168.1.1` | Get the last connection timestamp for a user for a specific IP |
+
+---
