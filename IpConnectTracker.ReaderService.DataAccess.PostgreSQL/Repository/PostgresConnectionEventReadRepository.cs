@@ -68,18 +68,20 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
         return result;
     }
 
-    public async Task<DateTime?> GetLastConnectionByIpAsync(string ip, CancellationToken cancellationToken = default)
+    public async Task<DateTime?> GetLastConnectionByUserAndIpAsync(long userId, string ip, CancellationToken cancellationToken = default)
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT MAX(timestamp)
+            SELECT timestamp
             FROM user_connection_events
-            WHERE ip = @Ip;
+            WHERE user_id = @userId AND ip = @ip
+            ORDER BY timestamp DESC
+            LIMIT 1;
         """;
 
         var result = await connection.ExecuteScalarAsync<DateTime?>(new CommandDefinition(
             sql,
-            new { Ip = ip },
+            new { userId = userId, ip = ip },
             cancellationToken: cancellationToken));
 
         return result;

@@ -5,6 +5,8 @@ namespace IpConnectTracker.ReaderService.Api;
 
 public class MockConnectionEventReadRepository : IConnectionEventReadRepository
 {
+    private IConnectionEventReadRepository _connectionEventReadRepositoryImplementation;
+
     public Task<IEnumerable<long>> GetUsersByIpPrefixAsync(string ipPrefix, int skip = 0, int take = 100,
         CancellationToken cancellationToken = default)
     {
@@ -30,7 +32,7 @@ public class MockConnectionEventReadRepository : IConnectionEventReadRepository
         return Task.FromResult<(string, DateTime)?>(result);
     }
 
-    public Task<DateTime?> GetLastConnectionByIpAsync(string ip, CancellationToken cancellationToken = default)
+    public Task<DateTime?> GetLastConnectionByUserAndIpAsync(long userId, string ip, CancellationToken cancellationToken = default)
     {
         var timestamp = DateTime.UtcNow.AddMinutes(-10);
         return Task.FromResult<DateTime?>(timestamp);

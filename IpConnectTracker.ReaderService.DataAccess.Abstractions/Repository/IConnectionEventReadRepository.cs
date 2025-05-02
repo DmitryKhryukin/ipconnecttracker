@@ -12,5 +12,5 @@ public interface IConnectionEventReadRepository
     
     Task<(string ip, DateTime timestamp)?> GetUserLastConnectionAsync(long userId, CancellationToken cancellationToken = default);
 
-    Task<DateTime?> GetLastConnectionByIpAsync(string ip, CancellationToken cancellationToken = default);
+    Task<DateTime?> GetLastConnectionByUserAndIpAsync(long userId, string ip, CancellationToken cancellationToken = default);
 }
