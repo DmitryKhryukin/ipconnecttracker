@@ -12,8 +12,7 @@ public class CliArgumentsParserTests
 
         Assert.Equal(CliArgumentsParser.DefaultCount, result.Count);
         Assert.Equal(CliArgumentsParser.DefaultQueue, result.Queue);
-        Assert.False(result.Random);
-        Assert.False(result.Verbose);
+        Assert.Equal(CliArgumentsParser.DefaultUserCount, result.UserCount);
     }
 
     [Fact]
@@ -62,33 +61,23 @@ public class CliArgumentsParserTests
     }
 
     [Fact]
-    public void ParseArgs_WithRandomFlag_SetsTrue()
+    public void ParseArgs_WithUserCountFlag_SetsTrue()
     {
-        var args = new[] { "--random" };
+        var args = new[] { "--user-count", "50" };
         var result = CliArgumentsParser.ParseArgs(args);
 
-        Assert.True(result.Random);
-    }
-
-    [Fact]
-    public void ParseArgs_WithVerboseFlag_SetsTrue()
-    {
-        var args = new[] { "--verbose" };
-        var result = CliArgumentsParser.ParseArgs(args);
-
-        Assert.True(result.Verbose);
+        Assert.Equal(50, result.UserCount);;
     }
 
     [Fact]
     public void ParseArgs_MixedArguments_ParsesAllCorrectly()
     {
-        var args = new[] { "--verbose", "--count", "500", "--queue", "logs", "--random" };
+        var args = new[] { "--verbose", "--count", "500", "--queue", "logs", "--user-count", "1000", "--random" };
         var result = CliArgumentsParser.ParseArgs(args);
-
-        Assert.True(result.Verbose);
+        
         Assert.Equal(500, result.Count);
         Assert.Equal("logs", result.Queue);
-        Assert.True(result.Random);
+        Assert.Equal(1000, result.UserCount);
     }
 
     [Fact]

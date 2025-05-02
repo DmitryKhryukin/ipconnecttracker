@@ -6,10 +6,10 @@ public static class CliArgumentsParser
 {
     private const string CountArg = "--count";
     private const string QueueArg = "--queue";
-    private const string RandomArg = "--random";
-    private const string VerboseArg = "--verbose";
+    private const string UserCountArg = "--user-count";
 
-    public static int DefaultCount { get; } = 50000;
+    public static int DefaultCount { get; } = 500000;
+    public static int DefaultUserCount { get; } = 1000;
     public static string DefaultQueue { get; } = "ip_connects";
     
     public static CliOptions ParseArgs(string[] args)
@@ -17,7 +17,8 @@ public static class CliArgumentsParser
         var options = new CliOptions()
         {
             Count = DefaultCount,
-            Queue = DefaultQueue
+            Queue = DefaultQueue,
+            UserCount = DefaultUserCount
         };
         
         int i = 0;
@@ -54,14 +55,17 @@ public static class CliArgumentsParser
                     }
                     break;
 
-                case RandomArg:
-                    options.Random = true;
-                    i++;
-                    break;
-
-                case VerboseArg:
-                    options.Verbose = true;
-                    i++;
+                case UserCountArg:
+                    if (i + 1 < args.Length && int.TryParse(args[i + 1], out var userCount))
+                    {
+                        options.UserCount = userCount;
+                        i += 2;
+                    }
+                    else
+                    {
+                        options.UserCount = DefaultUserCount;
+                        i++;
+                    }
                     break;
 
                 default:
