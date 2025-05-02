@@ -1,6 +1,7 @@
 How to run:
 
-docker compose up --build
+docker compose down -v
+docker compose up --build -d
 dotnet run --project IpConnectTracker.WriterService
 
 Pontetial issues:
