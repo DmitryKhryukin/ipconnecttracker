@@ -1,4 +1,4 @@
-namespace IpConnectTracker.ReaderService.DataAccess.Abstractions;
+namespace IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 
 public interface IConnectionEventReadRepository
 {

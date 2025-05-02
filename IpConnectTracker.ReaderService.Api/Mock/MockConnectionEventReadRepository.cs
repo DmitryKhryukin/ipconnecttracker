@@ -1,4 +1,5 @@
 using IpConnectTracker.ReaderService.DataAccess.Abstractions;
+using IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 
 namespace IpConnectTracker.ReaderService.Api;
 

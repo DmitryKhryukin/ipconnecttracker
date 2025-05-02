@@ -1,4 +1,5 @@
 using IpConnectTracker.ReaderService.DataAccess.Abstractions;
+using IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IpConnectTracker.ReaderService.Api.Controllers;
