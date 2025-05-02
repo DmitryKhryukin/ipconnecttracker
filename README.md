@@ -84,7 +84,24 @@ Once everything is up and running, you should have:
 - ✅ **Primary PostgreSQL** available at `localhost:5432`
 - ✅ **Replica PostgreSQL** available at `localhost:5433`
 - ✅ **RabbitMQ Management UI** at [http://localhost:15672](http://localhost:15672)
-  - **Username:** `guest`
-  - **Password:** `guest`
 - ✅ **Flyway** automatically applies DB migrations from:
   - `IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations`
+
+---
+
+## 🗝️ Default Credentials for Local Development
+
+### 📦 PostgreSQL
+
+| Component      | Host         | Port  | Database   | Username   | Password   |
+|----------------|--------------|-------|------------|------------|------------|
+| Primary DB     | `localhost`  | 5432  | `iptracker` | `app` | `secret` |
+| Replica DB     | `localhost`  | 5433  | `iptracker` | `app` | `secret` |
+
+> ℹ️ These values are defined in `docker-compose.yml` and `postgres-config/init.sql` (if present). You can change them as needed.
+
+### 🐰 RabbitMQ
+
+| UI URL                     | Username | Password |
+|---------------------------|----------|----------|
+| [http://localhost:15672](http://localhost:15672) | `guest`   | `guest`   |
