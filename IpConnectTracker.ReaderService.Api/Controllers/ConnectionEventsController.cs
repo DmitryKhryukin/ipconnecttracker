@@ -1,4 +1,4 @@
-using IpConnectTracker.ReaderService.DataAccess.Abstractions;
+using IpConnectTracker.ReaderService.Api.Model;
 using IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,8 +37,16 @@ public class ConnectionEventsController : ControllerBase
     [HttpGet("users/{userId}/latest")]
     public async Task<IActionResult> GetUserLastConnection(long userId)
     {
-        var result = await _repository.GetUserLastConnectionAsync(userId);
-        return result is null ? NotFound() : Ok(result);
+        var latestConnection = await _repository.GetUserLastConnectionAsync(userId);
+
+        if (latestConnection is null)
+        {
+            return NotFound();
+        }
+        
+        var result = new UserConnectionDto(latestConnection.Value.ip, latestConnection.Value.timestamp);
+
+        return Ok(result);
     }
 
     [HttpGet("ips/{ip}/last-connection")]

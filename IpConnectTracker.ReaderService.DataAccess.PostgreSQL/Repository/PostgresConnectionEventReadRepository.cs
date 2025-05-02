@@ -60,10 +60,12 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
             LIMIT 1;
         """;
 
-        return await connection.QueryFirstOrDefaultAsync<(string, DateTime)?>(new CommandDefinition(
+        var result = await connection.QueryFirstOrDefaultAsync<(string, DateTime)?>(new CommandDefinition(
             sql,
             new { UserId = userId },
             cancellationToken: cancellationToken));
+        
+        return result;
     }
 
     public async Task<DateTime?> GetLastConnectionByIpAsync(string ip, CancellationToken cancellationToken = default)
@@ -75,9 +77,11 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
             WHERE ip = @Ip;
         """;
 
-        return await connection.ExecuteScalarAsync<DateTime?>(new CommandDefinition(
+        var result = await connection.ExecuteScalarAsync<DateTime?>(new CommandDefinition(
             sql,
             new { Ip = ip },
             cancellationToken: cancellationToken));
+
+        return result;
     }
 }
