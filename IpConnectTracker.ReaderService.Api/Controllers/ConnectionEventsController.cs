@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace IpConnectTracker.ReaderService.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/connection-events")]
 public class ConnectionEventsController : ControllerBase
 {
     private readonly IConnectionEventReadRepository _repository;
