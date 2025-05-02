@@ -94,7 +94,7 @@ services:
       dockerfile: ./IpConnectTracker.ReaderService.Api/Dockerfile
     container_name: iptracker-reader
     ports:
-      - "5110:8080"
+      - "5109:8080"
     depends_on:
       - iptracker-db-replica
     environment:
