@@ -23,6 +23,8 @@ builder.Services.AddScoped<IConnectionEventReadRepository>(sp =>
 
 var app = builder.Build();
 
+app.UseMiddleware<IpConnectTracker.ReaderService.Api.Middleware.RequestTimeMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
