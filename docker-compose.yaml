@@ -6,6 +6,11 @@ services:
     ports:
       - "5672:5672"   # AMQP
       - "15672:15672" # Web UI
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   postgres:
     image: postgres:17.4
@@ -64,6 +69,36 @@ services:
       -user=app
       -password=secret
       migrate
+
+  writer-service:
+    build:
+      context: .
+      dockerfile: ./IpConnectTracker.WriterService/Dockerfile
+    container_name: iptracker-writer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    environment:
+      Rabbit__Host: iptracker-rabbit
+      Rabbit__Port: 5672
+      Rabbit__QueueName: ip_connects
+      Rabbit__UserName: guest
+      Rabbit__Password: guest
+      Postgres__ConnectionString: Host=iptracker-db;Port=5432;Database=iptracker;Username=app;Password=secret
+
+  reader-service:
+    build:
+      context: .
+      dockerfile: ./IpConnectTracker.ReaderService.Api/Dockerfile
+    container_name: iptracker-reader
+    ports:
+      - "5110:8080"
+    depends_on:
+      - iptracker-db-replica
+    environment:
+      Postgres__ConnectionString: Host=iptracker-db-replica;Port=5432;Database=iptracker;Username=app;Password=secret
 
 volumes:
   pgdata:
