@@ -20,9 +20,6 @@ public class ConnectionEventsController : ControllerBase
         [FromQuery] int skip = 0,
         [FromQuery] int take = 100)
     {
-        if (string.IsNullOrWhiteSpace(prefix))
-            return BadRequest("Prefix cannot be empty.");
-
         var users = await _repository.GetUsersByIpPrefixAsync(prefix, skip, take);
         return Ok(users);
     }
@@ -52,11 +49,6 @@ public class ConnectionEventsController : ControllerBase
     [HttpGet("users/{userId}/latest-by-ip")]
     public async Task<IActionResult> GetLatestByUserAndIp(long userId, [FromQuery(Name = "ip")] string ip)
     {
-        if (string.IsNullOrWhiteSpace(ip))
-        {
-            return BadRequest("Query parameter 'ip' is required.");
-        }
-        
         var timestamp = await _repository.GetLastConnectionByUserAndIpAsync(userId, ip);
         return timestamp is null
             ? NotFound()
