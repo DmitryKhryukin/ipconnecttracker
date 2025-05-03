@@ -15,6 +15,8 @@ public class PostgresWithFlywayFixture : IAsyncLifetime
     public IContainer PostgresContainer { get; }
     public IContainer FlywayContainer { get; }
 
+    public string ConnectionString => $"Host={PostgresContainer.Hostname};Port={PostgresContainer.GetMappedPublicPort(5432)};Database={DbName};Username={Username};Password={Password}";
+    
     public PostgresWithFlywayFixture()
     {
         Network = new NetworkBuilder()

@@ -31,3 +31,5 @@ app.MapControllers();
 app.MapGet("/health", () => "Healthy");
 
 app.Run();
+
+public partial class Program { } // required for CustomWebApplicationFactory in integration tests
