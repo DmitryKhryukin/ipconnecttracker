@@ -63,7 +63,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations:/flyway/sql
+      - ./src/IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations:/flyway/sql
     command: >
       -url=jdbc:postgresql://postgres:5432/iptracker
       -user=app
@@ -73,7 +73,7 @@ services:
   writer-service:
     build:
       context: .
-      dockerfile: ./IpConnectTracker.WriterService/Dockerfile
+      dockerfile: ./src/IpConnectTracker.WriterService/Dockerfile
     container_name: iptracker-writer
     depends_on:
       rabbitmq:
@@ -91,7 +91,7 @@ services:
   reader-service:
     build:
       context: .
-      dockerfile: ./IpConnectTracker.ReaderService.Api/Dockerfile
+      dockerfile: ./src/IpConnectTracker.ReaderService.Api/Dockerfile
     container_name: iptracker-reader
     ports:
       - "5109:8080"

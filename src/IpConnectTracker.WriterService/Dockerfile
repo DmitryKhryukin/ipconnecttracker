@@ -7,11 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["IpConnectTracker.WriterService/IpConnectTracker.WriterService.csproj", "IpConnectTracker.WriterService/"]
-COPY ["IpConnectTracker.WriterService.DataAccess.PostgreSQL/IpConnectTracker.WriterService.DataAccess.PostgreSQL.csproj", "IpConnectTracker.WriterService.DataAccess.PostgreSQL/"]
-COPY ["IpConnectTracker.WriterService.DataAccess.Abstractions/IpConnectTracker.WriterService.DataAccess.Abstractions.csproj", "IpConnectTracker.WriterService.DataAccess.Abstractions/"]
+COPY ["src/IpConnectTracker.WriterService/IpConnectTracker.WriterService.csproj", "IpConnectTracker.WriterService/"]
+COPY ["src/IpConnectTracker.WriterService.DataAccess.PostgreSQL/IpConnectTracker.WriterService.DataAccess.PostgreSQL.csproj", "IpConnectTracker.WriterService.DataAccess.PostgreSQL/"]
+COPY ["src/IpConnectTracker.WriterService.DataAccess.Abstractions/IpConnectTracker.WriterService.DataAccess.Abstractions.csproj", "IpConnectTracker.WriterService.DataAccess.Abstractions/"]
 RUN dotnet restore "IpConnectTracker.WriterService/IpConnectTracker.WriterService.csproj"
-COPY . .
+COPY src/. .
 WORKDIR "/src/IpConnectTracker.WriterService"
 RUN dotnet build "./IpConnectTracker.WriterService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

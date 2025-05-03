@@ -7,11 +7,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["IpConnectTracker.ReaderService.Api/IpConnectTracker.ReaderService.Api.csproj", "IpConnectTracker.ReaderService.Api/"]
-COPY ["IpConnectTracker.ReaderService.DataAccess.Abstractions/IpConnectTracker.ReaderService.DataAccess.Abstractions.csproj", "IpConnectTracker.ReaderService.DataAccess.Abstractions/"]
-COPY ["IpConnectTracker.ReaderService.DataAccess.PostgreSQL/IpConnectTracker.ReaderService.DataAccess.PostgreSQL.csproj", "IpConnectTracker.ReaderService.DataAccess.PostgreSQL/"]
+COPY ["src/IpConnectTracker.ReaderService.Api/IpConnectTracker.ReaderService.Api.csproj", "IpConnectTracker.ReaderService.Api/"]
+COPY ["src/IpConnectTracker.ReaderService.DataAccess.Abstractions/IpConnectTracker.ReaderService.DataAccess.Abstractions.csproj", "IpConnectTracker.ReaderService.DataAccess.Abstractions/"]
+COPY ["src/IpConnectTracker.ReaderService.DataAccess.PostgreSQL/IpConnectTracker.ReaderService.DataAccess.PostgreSQL.csproj", "IpConnectTracker.ReaderService.DataAccess.PostgreSQL/"]
 RUN dotnet restore "IpConnectTracker.ReaderService.Api/IpConnectTracker.ReaderService.Api.csproj"
-COPY . .
+COPY src/. .
 WORKDIR "/src/IpConnectTracker.ReaderService.Api"
 RUN dotnet build "./IpConnectTracker.ReaderService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
