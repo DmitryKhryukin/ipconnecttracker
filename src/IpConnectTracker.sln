@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C0156983
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.ReaderService.Api.UnitTests", "IpConnectTracker.ReaderService.Api.UnitTests\IpConnectTracker.ReaderService.Api.UnitTests.csproj", "{62750BA3-E6CD-4C8F-8F9B-5070D65428B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpConnectTracker.IntegrationTesting.Shared", "IpConnectTracker.IntegrationTesting.Shared\IpConnectTracker.IntegrationTesting.Shared.csproj", "{0C034A5D-9243-40F2-A1BE-290C93337BA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,11 +76,16 @@ Global
 		{62750BA3-E6CD-4C8F-8F9B-5070D65428B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62750BA3-E6CD-4C8F-8F9B-5070D65428B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62750BA3-E6CD-4C8F-8F9B-5070D65428B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C034A5D-9243-40F2-A1BE-290C93337BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C034A5D-9243-40F2-A1BE-290C93337BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C034A5D-9243-40F2-A1BE-290C93337BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C034A5D-9243-40F2-A1BE-290C93337BA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3F86EEE0-2007-4776-AB04-4AC889BE6DB4} = {C0156983-F556-4867-8F1E-72DF3B9B7B50}
 		{579A124D-B1CA-4A42-933C-F9836E36F7A8} = {C0156983-F556-4867-8F1E-72DF3B9B7B50}
 		{4B88E16B-B916-4833-81D6-0D3C392D0719} = {C0156983-F556-4867-8F1E-72DF3B9B7B50}
 		{62750BA3-E6CD-4C8F-8F9B-5070D65428B8} = {C0156983-F556-4867-8F1E-72DF3B9B7B50}
+		{0C034A5D-9243-40F2-A1BE-290C93337BA0} = {C0156983-F556-4867-8F1E-72DF3B9B7B50}
 	EndGlobalSection
 EndGlobal

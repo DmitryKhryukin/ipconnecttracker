@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\IpConnectTracker.IntegrationTesting.Shared\IpConnectTracker.IntegrationTesting.Shared.csproj" />
       <ProjectReference Include="..\IpConnectTracker.WriterService\IpConnectTracker.WriterService.csproj" />
     </ItemGroup>
 
