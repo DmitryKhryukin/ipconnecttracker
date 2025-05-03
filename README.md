@@ -91,7 +91,7 @@ Once everything is up and running, you should have:
 | Primary DB     | `localhost`  | 5432  | `iptracker` | `app` | `secret` |
 | Replica DB     | `localhost`  | 5433  | `iptracker` | `app` | `secret` |
 
-> ℹ️ These values are defined in `docker-compose.yml` and `postgres-config/init.sql` (if present). You can change them as needed.
+> ℹ️ These values are defined in `docker-compose.yml`
 
 ### 🐰 RabbitMQ
 
@@ -106,6 +106,7 @@ Once everything is up and running, you should have:
 Project: `IpConnectTracker.ReaderService.Api`
 
 Base URL (by default): `http://localhost:5109`
+Swagger URL: `http://localhost:5109/swagger/index.html`
 
 ### 📘 Endpoints
 
