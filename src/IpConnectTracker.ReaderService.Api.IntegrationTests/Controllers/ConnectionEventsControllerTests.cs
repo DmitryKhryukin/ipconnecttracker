@@ -11,7 +11,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
 {
     private const long UnknownUserId = 9999;
     private const string UnknownIp = "8.8.8.8";
-    private record TestConnection(long userId, string ip, DateTime lastConnected);
+    private record TestConnection(long UserId, string IpAddress, DateTime LastConnected);
     
     private static readonly List<TestConnection> TestConnections = new List<TestConnection>
     {
@@ -39,7 +39,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         {
             await conn.ExecuteAsync(@"
                 INSERT INTO user_connection_events (user_id, ip_address, last_connected)
-                VALUES (@UserId, CAST(@Ip AS inet), @LastConnected);", connection);
+                VALUES (@UserId, CAST(@IpAddress AS inet), @LastConnected);", connection);
         }
     }
 
@@ -93,7 +93,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     [Fact]
     public async Task GetUserLastConnection_UserConnected_ShouldReturnLatestConnection()
     {
-        var expected = TestConnections.First(x => x.userId == 1001 && x.ip == "127.0.0.1");
+        var expected = TestConnections.First(x => x.UserId == 1001 && x.IpAddress == "127.0.0.1");
 
         var response = await _client.GetAsync("/api/connection-events/users/1001/latest");
         response.EnsureSuccessStatusCode();
@@ -104,8 +104,8 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
             PropertyNameCaseInsensitive = true
         })!;
 
-        Assert.Equal(expected.ip, dto.Ip);
-        Assert.Equal(expected.lastConnected, dto.ConnectedAt);
+        Assert.Equal(expected.IpAddress, dto.Ip);
+        Assert.Equal(expected.LastConnected, dto.ConnectedAt);
     }
 
     [Fact]
@@ -130,7 +130,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     [Fact]
     public async Task GetLatestByUserAndIp_UserConnectedFromIp_ShouldReturnTimestamp()
     {
-        var expected = TestConnections.First(x => x.userId == 1001 && x.ip == "127.0.0.1");
+        var expected = TestConnections.First(x => x.UserId == 1001 && x.IpAddress == "127.0.0.1");
 
         var response = await _client.GetAsync("/api/connection-events/users/1001/latest-by-ip?ip=127.0.0.1");
         response.EnsureSuccessStatusCode();
@@ -139,6 +139,6 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         var doc = JsonDocument.Parse(json);
 
         Assert.True(doc.RootElement.TryGetProperty("timestamp", out var ts));
-        Assert.Equal(expected.lastConnected, ts.GetDateTime());
+        Assert.Equal(expected.LastConnected, ts.GetDateTime());
     }
 }
