@@ -8,8 +8,8 @@ public static class CliArgumentsParser
     private const string QueueArg = "--queue";
     private const string UserCountArg = "--user-count";
 
-    public static int DefaultCount { get; } = 300_000;
-    public static int DefaultUserCount { get; } = 100;
+    public static int DefaultCount { get; } = 2000;
+    public static int DefaultUserCount { get; } = 10;
     public static string DefaultQueue { get; } = "ip_connects";
     
     public static CliOptions ParseArgs(string[] args)
