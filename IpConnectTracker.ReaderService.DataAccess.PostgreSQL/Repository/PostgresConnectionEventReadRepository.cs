@@ -37,10 +37,10 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT DISTINCT ip_address::text
+            SELECT DISTINCT host(ip_address)
             FROM user_connection_events
             WHERE user_id = @UserId
-            ORDER BY ip_address;
+            ORDER BY host(ip_address);
         """;
 
         return await connection.QueryAsync<string>(new CommandDefinition(
@@ -53,7 +53,7 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT ip_address::text, last_connected
+            SELECT host(ip_address), last_connected
             FROM user_connection_events
             WHERE user_id = @UserId
             ORDER BY last_connected DESC
