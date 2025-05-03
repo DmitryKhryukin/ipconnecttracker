@@ -22,8 +22,6 @@ docker compose up --build
 # Or build and start containers in the background
 docker compose up --build -d
 
----
-
 ## Potential Issues
 
 ### 1. Docker volume not shared on macOS
