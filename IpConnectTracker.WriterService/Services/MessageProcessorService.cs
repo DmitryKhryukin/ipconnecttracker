@@ -45,7 +45,7 @@ public class MessageProcessorService : BackgroundService
                     return;
                 }
 
-                await repository.StoreAsync(userId, ip, DateTime.UtcNow, cancellationToken);
+                await repository.UpsertAsync(userId, ip, DateTime.UtcNow, cancellationToken);
                 _logger.LogDebug("Stored event for user {UserId} with IP {IP}", userId, ip);
             }
         }

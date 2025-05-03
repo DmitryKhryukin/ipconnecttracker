@@ -45,7 +45,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
         var testLoggerProvider = new TestLoggerProvider();
 
         var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
-        mockConnectionEventRepository.Setup(r => r.StoreAsync(It.IsAny<long>(), 
+        mockConnectionEventRepository.Setup(r => r.UpsertAsync(It.IsAny<long>(), 
                 It.IsAny<string>(), 
                 It.IsAny<DateTime>(),
                 It.IsAny<CancellationToken>()))
@@ -107,7 +107,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
             await Task.Delay(100);
         }
 
-        mockConnectionEventRepository.Verify(repo => repo.StoreAsync(
+        mockConnectionEventRepository.Verify(repo => repo.UpsertAsync(
                 It.Is<long>(x => x == userId),
                 It.Is<string>(x => x == ipAddress),
                 It.IsAny<DateTime>(),

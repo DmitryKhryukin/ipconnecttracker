@@ -1,6 +1,6 @@
 CREATE TABLE user_connection_events (
-    id SERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    ip TEXT NOT NULL,
-    timestamp TIMESTAMPTZ NOT NULL
+    ip_address INET NOT NULL,
+    last_connected TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY (user_id, ip_address)
 );

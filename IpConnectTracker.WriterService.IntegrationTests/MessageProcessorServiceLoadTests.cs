@@ -14,7 +14,7 @@ public class MessageProcessorServiceLoadTests
     public async Task EnqueueAsync_Around50000MessagesPer30Seconds_ShouldProcessAllMessages()
     {
         var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
-        mockConnectionEventRepository.Setup(r => r.StoreAsync(It.IsAny<long>(), 
+        mockConnectionEventRepository.Setup(r => r.UpsertAsync(It.IsAny<long>(), 
                 It.IsAny<string>(), 
                 It.IsAny<DateTime>(),
                 It.IsAny<CancellationToken>()))

@@ -22,7 +22,7 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
         var sql = """
             SELECT DISTINCT user_id
             FROM user_connection_events
-            WHERE ip LIKE @IpPattern
+            WHERE ip_address::TEXT LIKE @IpPattern
             ORDER BY user_id
             OFFSET @Skip LIMIT @Take;
         """;
@@ -37,10 +37,10 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT DISTINCT ip
+            SELECT DISTINCT ip_address::text
             FROM user_connection_events
             WHERE user_id = @UserId
-            ORDER BY ip;
+            ORDER BY ip_address;
         """;
 
         return await connection.QueryAsync<string>(new CommandDefinition(
@@ -53,10 +53,10 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT ip, timestamp
+            SELECT ip_address::text, last_connected
             FROM user_connection_events
             WHERE user_id = @UserId
-            ORDER BY timestamp DESC
+            ORDER BY last_connected DESC
             LIMIT 1;
         """;
 
@@ -72,10 +72,10 @@ public class PostgresConnectionEventReadRepository : IConnectionEventReadReposit
     {
         using var connection = CreateConnection();
         var sql = """
-            SELECT timestamp
+            SELECT last_connected
             FROM user_connection_events
-            WHERE user_id = @userId AND ip = @ip
-            ORDER BY timestamp DESC
+            WHERE user_id = @userId AND ip_address = @ip::inet
+            ORDER BY last_connected DESC
             LIMIT 1;
         """;
 
