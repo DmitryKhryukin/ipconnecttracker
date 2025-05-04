@@ -1,9 +1,7 @@
 using System.Text;
 using DotNet.Testcontainers.Builders;
 using IpConnectTracker.WriterService.Config;
-using IpConnectTracker.WriterService.DataAccess.Abstractions;
 using IpConnectTracker.WriterService.DataAccess.Abstractions.Repository;
-using IpConnectTracker.WriterService.Infrastructure;
 using IpConnectTracker.WriterService.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,7 +36,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
     public async Task DisposeAsync() => await _rabbitMqContainer.DisposeAsync();
 
     [Fact(Timeout = 60_000)]
-    public async Task MessageProcessorService_Should_Process_Message_From_RabbitMq_Container()
+    public async Task MessageProcessorService_ShouldProcessMessageFromRabbitMqContainer()
     {
         const string queueName = "ip_connects_test";
         const int rabbitMqPort = 5672;
