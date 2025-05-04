@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using Dapper;
 using IpConnectTracker.IntegrationTesting.Shared;
@@ -63,7 +64,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     {
         var response = await _client.GetAsync("/api/connection-events/users/by-ip-prefix?prefix=");
 
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
         Assert.Contains("The prefix field is required.", content);
@@ -87,7 +88,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     {
         var response = await _client.GetAsync($"/api/connection-events/users/{UnknownUserId}/latest");
 
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
@@ -113,7 +114,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     {
         var response = await _client.GetAsync("/api/connection-events/users/1001/latest-by-ip?ip=");
 
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
         var content = await response.Content.ReadAsStringAsync();
         Assert.Contains("The ip field is required", content);
@@ -124,7 +125,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
     {
         var response = await _client.GetAsync($"/api/connection-events/users/1001/latest-by-ip?ip={UnknownIp}");
 
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
@@ -141,4 +142,19 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         Assert.True(doc.RootElement.TryGetProperty("timestamp", out var ts));
         Assert.Equal(expected.LastConnected, ts.GetDateTime());
     }
+    
+    [Fact]
+    public async Task GetLatestByUserAndIp_InvalidIpFormat_ShouldReturnBadRequest()
+    {
+        var invalidIp = "not-an-ip";
+        var url = $"/api/connection-events/users/1001/latest-by-ip?ip={invalidIp}";
+        
+        var response = await _client.GetAsync(url);
+        
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Invalid IP address format", content);
+    }
+
 }
