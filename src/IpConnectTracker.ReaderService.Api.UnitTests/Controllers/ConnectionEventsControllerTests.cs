@@ -118,4 +118,17 @@ public class ConnectionEventsControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equivalent(new { timestamp }, okResult.Value);
     }
+    
+    [Theory]
+    [InlineData("invalid format")]
+    [InlineData("abc.asf.sadf.fasf")]
+    [InlineData("::g")]
+    [InlineData(null)]
+    public async Task GetLatestByUserAndIp_InvalidOrEmptyIp_ShouldReturnBadRequest(string ipAddress)
+    {
+        var result = await _controller.GetLatestByUserAndIp(1, ipAddress);
+
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.Equal("Invalid IP address format.", badRequest.Value);
+    }
 }

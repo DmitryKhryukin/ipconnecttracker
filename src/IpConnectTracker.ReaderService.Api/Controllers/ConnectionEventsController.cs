@@ -1,3 +1,4 @@
+using System.Net;
 using IpConnectTracker.ReaderService.Api.Model;
 using IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -49,9 +50,14 @@ public class ConnectionEventsController : ControllerBase
     [HttpGet("users/{userId}/latest-by-ip")]
     public async Task<IActionResult> GetLatestByUserAndIp(long userId, [FromQuery(Name = "ip")] string ip)
     {
-        var timestamp = await _repository.GetLastConnectionByUserAndIpAsync(userId, ip);
-        return timestamp is null
+        if (!IPAddress.TryParse(ip, out _))
+        {
+            return BadRequest("Invalid IP address format.");
+        }
+        
+        var result = await _repository.GetLastConnectionByUserAndIpAsync(userId, ip);
+        return result is null
             ? NotFound()
-            : Ok(new { timestamp });
+            : Ok(new { result });
     }
 }
