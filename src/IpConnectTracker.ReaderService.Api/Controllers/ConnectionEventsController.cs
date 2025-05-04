@@ -1,5 +1,6 @@
 using System.Net;
 using IpConnectTracker.ReaderService.Api.Model;
+using IpConnectTracker.ReaderService.Api.Validation;
 using IpConnectTracker.ReaderService.DataAccess.Abstractions.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,11 @@ public class ConnectionEventsController : ControllerBase
         [FromQuery] int skip = 0,
         [FromQuery] int take = 100)
     {
+        if (!IpAddressPrefixValidator.IsValid(prefix))
+        {
+            return BadRequest("Invalid ip address prefix.");
+        }
+        
         var users = await _repository.GetUsersByIpPrefixAsync(prefix, skip, take);
         return Ok(users);
     }
