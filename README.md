@@ -118,3 +118,14 @@ Swagger URL: `http://localhost:5109/swagger/index.html`
 | `GET` | `/api/connection-events/users/{userId}/latest-by-ip?ip=192.168.1.1` | Get the last connection timestamp for a user for a specific IP |
 
 ---
+
+## Roadmap
+
+Planned improvements and next steps:
+
+- **Add metrics** — to compare performance of different approaches and monitor system health;
+- **Optimize IP prefix search in PostgreSQL** — consider adding an index on the `ip_address` field to speed up prefix queries if it doesn’t degrade write performance;
+- **Evaluate Elasticsearch** — as an alternative read source for advanced or large-scale IP prefix search;
+- **Introduce retry logic and dead-letter queue** — to safely handle transient failures and not processed events in the writer pipeline;
+- **Add integration tests for failure scenarios** — simulate DB/RabbitMQ/service outages to verify resilience and recovery behavior;
+- **Add persistent log storage** — centralize logs with tools like ELK stack for observability and debugging.
