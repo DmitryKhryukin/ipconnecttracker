@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Channels;
 using IpConnectTracker.WriterService.DataAccess.Abstractions;
 using IpConnectTracker.WriterService.DataAccess.Abstractions.Repository;
@@ -42,7 +43,7 @@ public class MessageProcessorService : BackgroundService
                 if (!MessageParser.TryParse(message, out var userId, out var ip))
                 {
                     _logger.LogWarning("Invalid message format: {Message}", message);
-                    return;
+                    continue;
                 }
 
                 await repository.UpsertAsync(userId, ip, DateTime.UtcNow, cancellationToken);
