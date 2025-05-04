@@ -13,7 +13,7 @@ public class MessageProcessorServiceLoadTests
     [Fact(Timeout = 60_000)]
     public async Task EnqueueAsync_Around50000MessagesPer30Seconds_ShouldProcessAllMessages()
     {
-        var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
+        var mockConnectionEventRepository = new Mock<IConnectionEventWriteRepository>();
         mockConnectionEventRepository.Setup(r => r.UpsertAsync(It.IsAny<long>(), 
                 It.IsAny<string>(), 
                 It.IsAny<DateTime>(),
@@ -26,7 +26,7 @@ public class MessageProcessorServiceLoadTests
                 services.AddSingleton<MessageProcessorService>();
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
                 
-                services.AddScoped<IConnectionEventRepository>(_ => mockConnectionEventRepository.Object);
+                services.AddScoped<IConnectionEventWriteRepository>(_ => mockConnectionEventRepository.Object);
             })
             .Build();
 

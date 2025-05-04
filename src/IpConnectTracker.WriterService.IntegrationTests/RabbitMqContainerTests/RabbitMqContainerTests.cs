@@ -44,7 +44,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
         const int rabbitMqPort = 5672;
         var testLoggerProvider = new TestLoggerProvider();
 
-        var mockConnectionEventRepository = new Mock<IConnectionEventRepository>();
+        var mockConnectionEventRepository = new Mock<IConnectionEventWriteRepository>();
         mockConnectionEventRepository.Setup(r => r.UpsertAsync(It.IsAny<long>(), 
                 It.IsAny<string>(), 
                 It.IsAny<DateTime>(),
@@ -72,7 +72,7 @@ public class RabbitMqContainerTests : IAsyncLifetime
                 services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
                 services.AddHostedService<RabbitMqListenerService>();
                 
-                services.AddScoped<IConnectionEventRepository>(_ => mockConnectionEventRepository.Object);
+                services.AddScoped<IConnectionEventWriteRepository>(_ => mockConnectionEventRepository.Object);
             })
             .Build();
 

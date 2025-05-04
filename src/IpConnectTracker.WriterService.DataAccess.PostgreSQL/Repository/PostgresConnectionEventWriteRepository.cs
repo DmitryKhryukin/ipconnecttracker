@@ -6,11 +6,11 @@ using Npgsql;
 
 namespace IpConnectTracker.WriterService.DataAccess.PostgreSQL.Repository;
 
-public class PostgresConnectionEventRepository : IConnectionEventRepository
+public class PostgresConnectionEventWriteRepository : IConnectionEventWriteRepository
 {
     private readonly string _connectionString;
 
-    public PostgresConnectionEventRepository(IOptions<PostgresWriteOptions> options)
+    public PostgresConnectionEventWriteRepository(IOptions<PostgresWriteOptions> options)
     {
         _connectionString = options.Value.ConnectionString;
     }

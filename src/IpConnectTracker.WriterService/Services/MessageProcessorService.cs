@@ -35,7 +35,7 @@ public class MessageProcessorService : BackgroundService
         try
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            var repository = scope.ServiceProvider.GetRequiredService<IConnectionEventRepository>();
+            var repository = scope.ServiceProvider.GetRequiredService<IConnectionEventWriteRepository>();
                 
             await foreach (var message in _channel.Reader.ReadAllAsync(cancellationToken))
             {

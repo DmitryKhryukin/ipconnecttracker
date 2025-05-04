@@ -12,7 +12,7 @@ public class MessageProcessorServiceTests
     [Fact]
     public async Task EnqueueAsync_SomeMessagesAreInvalid_ShouldProcessOnlyValidMessages()
     {
-        var mockRepo = new Mock<IConnectionEventRepository>();
+        var mockRepo = new Mock<IConnectionEventWriteRepository>();
         var mockLogger = new Mock<ILogger<MessageProcessorService>>();
 
         var serviceProvider = new Mock<IServiceProvider>();
@@ -21,7 +21,7 @@ public class MessageProcessorServiceTests
         
         serviceScope.Setup(x => x.ServiceProvider).Returns(serviceProvider.Object);
         serviceScopeFactory.Setup(x => x.CreateScope()).Returns(serviceScope.Object);
-        serviceProvider.Setup(x => x.GetService(typeof(IConnectionEventRepository))).Returns(mockRepo.Object);
+        serviceProvider.Setup(x => x.GetService(typeof(IConnectionEventWriteRepository))).Returns(mockRepo.Object);
         
         var service = new MessageProcessorService(mockLogger.Object, serviceScopeFactory.Object);
 
@@ -65,7 +65,7 @@ public class MessageProcessorServiceTests
     [Fact]
     public async Task EnqueueAsync_SomeMessagesHaveInvalidIpFormat_ShouldProcessOnlyValidMessages()
     {
-        var mockRepo = new Mock<IConnectionEventRepository>();
+        var mockRepo = new Mock<IConnectionEventWriteRepository>();
         var mockLogger = new Mock<ILogger<MessageProcessorService>>();
 
         var serviceProvider = new Mock<IServiceProvider>();
@@ -74,7 +74,7 @@ public class MessageProcessorServiceTests
         
         serviceScope.Setup(x => x.ServiceProvider).Returns(serviceProvider.Object);
         serviceScopeFactory.Setup(x => x.CreateScope()).Returns(serviceScope.Object);
-        serviceProvider.Setup(x => x.GetService(typeof(IConnectionEventRepository))).Returns(mockRepo.Object);
+        serviceProvider.Setup(x => x.GetService(typeof(IConnectionEventWriteRepository))).Returns(mockRepo.Object);
         
         var service = new MessageProcessorService(mockLogger.Object, serviceScopeFactory.Object);
         

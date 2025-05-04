@@ -13,7 +13,7 @@ builder.Services.AddSingleton<MessageProcessorService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<MessageProcessorService>());
 builder.Services.AddHostedService<RabbitMqListenerService>();
 
-builder.Services.AddScoped<IConnectionEventRepository, PostgresConnectionEventRepository>();
+builder.Services.AddScoped<IConnectionEventWriteRepository, PostgresConnectionEventWriteRepository>();
 
 
 var app = builder.Build();
