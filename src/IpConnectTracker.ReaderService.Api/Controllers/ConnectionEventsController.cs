@@ -55,9 +55,9 @@ public class ConnectionEventsController : ControllerBase
             return BadRequest("Invalid IP address format.");
         }
         
-        var result = await _repository.GetLastConnectionByUserAndIpAsync(userId, ip);
-        return result is null
+        var timestamp = await _repository.GetLastConnectionByUserAndIpAsync(userId, ip);
+        return timestamp is null
             ? NotFound()
-            : Ok(new { result });
+            : Ok(new { timestamp });
     }
 }
