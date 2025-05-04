@@ -79,6 +79,8 @@ Once everything is up and running, you should have:
 - ✅ **RabbitMQ Management UI** at [http://localhost:15672](http://localhost:15672)
 - ✅ **Flyway** automatically applies DB migrations from:
   - `IpConnectTracker.WriterService.DataAccess.PostgreSQL/Migrations`
+- ✅ **WriterService** is running and listening to RabbitMQ events
+- ✅ **ReaderService.Api** is available at `http://localhost:5109` (with Swagger at `/swagger`)
 
 ---
 
