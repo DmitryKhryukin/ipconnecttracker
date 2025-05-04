@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using IpConnectTracker.Cli.Helpers;
+using IpConnectTracker.RabbitMqPublisher.Cli.Helpers;
 using RabbitMQ.Client;
 
-namespace IpConnectTracker.Cli
+namespace IpConnectTracker.RabbitMqPublisher.Cli
 {
     public class Program
     {

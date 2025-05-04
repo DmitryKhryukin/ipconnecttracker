@@ -1,4 +1,4 @@
-namespace IpConnectTracker.Cli.Config;
+namespace IpConnectTracker.RabbitMqPublisher.Cli.Config;
 
 public class CliOptions
 {

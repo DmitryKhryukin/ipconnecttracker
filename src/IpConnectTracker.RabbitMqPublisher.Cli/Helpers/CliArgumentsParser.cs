@@ -1,6 +1,6 @@
-using IpConnectTracker.Cli.Config;
+using IpConnectTracker.RabbitMqPublisher.Cli.Config;
 
-namespace IpConnectTracker.Cli.Helpers;
+namespace IpConnectTracker.RabbitMqPublisher.Cli.Helpers;
 
 public static class CliArgumentsParser
 {

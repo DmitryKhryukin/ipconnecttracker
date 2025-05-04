@@ -1,4 +1,4 @@
-using IpConnectTracker.Cli.Helpers;
+using IpConnectTracker.RabbitMqPublisher.Cli.Helpers;
 
 namespace IpConnectTracker.RabbitMqPublisher.Cli.UnitTests.Helpers;
 
