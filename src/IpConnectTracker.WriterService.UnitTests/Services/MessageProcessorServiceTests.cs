@@ -56,7 +56,62 @@ public class MessageProcessorServiceTests
             x => x.Log(
                 LogLevel.Warning,
                 It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("Invalid message format")),
+                It.Is<It.IsAnyType>((v, t) => v.ToString().StartsWith("Invalid message format")),
+                It.IsAny<Exception>(),
+                It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+            Times.Exactly(2));
+    }
+    
+    [Fact]
+    public async Task EnqueueAsync_SomeMessagesHaveInvalidIpFormat_ShouldProcessOnlyValidMessages()
+    {
+        var mockRepo = new Mock<IConnectionEventRepository>();
+        var mockLogger = new Mock<ILogger<MessageProcessorService>>();
+
+        var serviceProvider = new Mock<IServiceProvider>();
+        var serviceScope = new Mock<IServiceScope>();
+        var serviceScopeFactory = new Mock<IServiceScopeFactory>();
+        
+        serviceScope.Setup(x => x.ServiceProvider).Returns(serviceProvider.Object);
+        serviceScopeFactory.Setup(x => x.CreateScope()).Returns(serviceScope.Object);
+        serviceProvider.Setup(x => x.GetService(typeof(IConnectionEventRepository))).Returns(mockRepo.Object);
+        
+        var service = new MessageProcessorService(mockLogger.Object, serviceScopeFactory.Object);
+        
+        var cancellationToken = new CancellationTokenSource();
+        var backgroundTask = service.StartAsync(cancellationToken.Token);
+
+        long userId = 1001;
+        var validIpAddress = "127.0.0.1";
+        var validMessage = $"{userId},{validIpAddress}";
+        
+        var invalidIpAddress = "invalid_address";
+        var invalidMessage = $"{userId},{invalidIpAddress}";
+        
+        await service.EnqueueAsync(validMessage); 
+        await service.EnqueueAsync(validMessage); 
+        await service.EnqueueAsync(validMessage); 
+        await service.EnqueueAsync(validMessage);
+        
+        await service.EnqueueAsync(invalidMessage); 
+        await service.EnqueueAsync(invalidMessage); 
+
+        await cancellationToken.CancelAsync();
+        await backgroundTask;
+        
+        mockRepo.Verify(
+            x => x.UpsertAsync(
+                It.IsAny<long>(),
+                It.IsAny<string>(),
+                It.IsAny<DateTime>(),
+                It.IsAny<CancellationToken>()),
+            Times.Exactly(4));
+
+        mockLogger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((v, t) => v.ToString().StartsWith("Invalid IP format")),
                 It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception, string>>()),
             Times.Exactly(2));
