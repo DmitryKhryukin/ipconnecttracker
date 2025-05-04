@@ -69,6 +69,17 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         var content = await response.Content.ReadAsStringAsync();
         Assert.Contains("The prefix field is required.", content);
     }
+    
+    [Fact]
+    public async Task GetUsersByIpPrefix_PrefixHasInvalidFormat_ShouldReturnBadRequest()
+    {
+        var response = await _client.GetAsync("/api/connection-events/users/by-ip-prefix?prefix=asdf");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Invalid ip address prefix.", content);
+    }
 
     [Fact]
     public async Task GetUsersByIpPrefix_ValidPrefix_ShouldReturnExpectedUserIds()

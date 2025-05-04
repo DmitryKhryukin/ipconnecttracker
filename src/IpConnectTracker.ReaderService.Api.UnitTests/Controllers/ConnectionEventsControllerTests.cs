@@ -23,7 +23,16 @@ public class ConnectionEventsControllerTests
         var result = await _controller.GetUsersByIpPrefix(" ");
 
         var badRequest = Assert.IsType<BadRequestObjectResult>(result);
-        Assert.Equal("Prefix cannot be empty.", badRequest.Value);
+        Assert.Equal("Invalid ip address prefix.", badRequest.Value);
+    }
+    
+    [Fact]
+    public async Task GetUsersByIpPrefix_PrefixIsInvalid_ShouldReturnBadRequest()
+    {
+        var result = await _controller.GetUsersByIpPrefix("invalid_prefix");
+
+        var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.Equal("Invalid ip address prefix.", badRequest.Value);
     }
 
     [Fact]
@@ -90,7 +99,7 @@ public class ConnectionEventsControllerTests
         var result = await _controller.GetLatestByUserAndIp(1, "");
 
         var badRequest = Assert.IsType<BadRequestObjectResult>(result);
-        Assert.Equal("Query parameter 'ip' is required.", badRequest.Value);
+        Assert.Equal("Invalid IP address format.", badRequest.Value);
     }
 
     [Fact]
