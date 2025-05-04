@@ -119,6 +119,28 @@ Swagger URL: `http://localhost:5109/swagger/index.html`
 
 ---
 
+## Populating the Database with test data
+
+You can use the `IpConnectTracker.RabbitMqPublisher.Cli` tool to send simulated connection events and populate the database with random user/IP pairs.
+
+### How to Run
+
+Make sure Docker services (PostgreSQL, RabbitMQ, WriterService etc) are up and running.
+Then run the publisher CLI:
+
+```bash
+dotnet run --project src/IpConnectTracker.RabbitMqPublisher.Cli --count 1000 --user-count 100 --queue ip_connects
+```
+
+### ⚙️ Command-line Arguments
+
+| Argument        | Description                                  | Default        |
+|-----------------|----------------------------------------------|----------------|
+| `--count`       | Number of connection events to send          | 100            |
+| `--user-count`  | Number of unique user ids in the events      | 10             |
+| `--queue`       | RabbitMQ queue name                          | ip_connects    |
+
+
 ## Roadmap
 
 Planned improvements and next steps:
