@@ -28,7 +28,7 @@ public class RabbitMqConsumer : AsyncDefaultBasicConsumer
         try
         {
             var message = Encoding.UTF8.GetString(body.Span);
-            _logger.LogDebug("Received message: {Message}", message);
+            _logger.LogDebug($"Received message: {message}");
 
             await _messageProcessorService.EnqueueAsync(message, cancellationToken);
             await Channel.BasicAckAsync(deliveryTag, false, cancellationToken);

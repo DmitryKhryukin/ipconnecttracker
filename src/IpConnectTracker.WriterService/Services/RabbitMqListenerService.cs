@@ -59,7 +59,7 @@ public sealed class RabbitMqListenerService : BackgroundService
                 consumer: consumer,
                 cancellationToken: cancellationToken);
 
-            _logger.LogInformation("RabbitMQ listener started on queue {Queue}", _options.QueueName);
+            _logger.LogInformation($"RabbitMQ listener started on queue {_options.QueueName}");
 
             await Task.Delay(Timeout.Infinite, cancellationToken);
         }
