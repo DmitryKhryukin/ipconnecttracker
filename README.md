@@ -5,7 +5,7 @@ This project uses Docker Compose to run:
 - PostgreSQL (with streaming replication: primary and replica)
 - RabbitMQ
 - Flyway for database migrations  
-- `WriterService`: a .NET Core backend that listens for incoming events and writes them to PostgreSQL.
+- `WriterService`: a .NET Core backend that listens for incoming events and writes them to PostgreSQL
 - `ReaderService.Api`: a .NET Web API for querying connection history
 
 ---
@@ -72,7 +72,7 @@ docker compose up --build -d
 
 ## ✅ After Setup
 
-Once everything is up and running, you should have:
+Once everything is up and running you should have:
 
 - ✅ **Primary PostgreSQL** available at `localhost:5432`
 - ✅ **Replica PostgreSQL** available at `localhost:5433`
