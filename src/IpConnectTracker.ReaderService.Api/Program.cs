@@ -10,8 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddSingleton<IConnectionEventReadRepository, MockConnectionEventReadRepository>();
-
 builder.Services.Configure<PostgresReadOptions>(
     builder.Configuration.GetSection("Postgres"));
 

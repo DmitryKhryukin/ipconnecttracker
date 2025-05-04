@@ -56,7 +56,7 @@ public class MessageProcessorServiceTests
             x => x.Log(
                 LogLevel.Warning,
                 It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => v.ToString().StartsWith("Invalid message format")),
+                It.Is<It.IsAnyType>((x, t) => x.ToString().StartsWith("Invalid message format")),
                 It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception, string>>()),
             Times.Exactly(2));
@@ -118,7 +118,7 @@ public class MessageProcessorServiceTests
             x => x.Log(
                 LogLevel.Warning,
                 It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => v.ToString().StartsWith("Invalid IP format")),
+                It.Is<It.IsAnyType>((x, t) => x.ToString().StartsWith("Invalid IP format")),
                 It.IsAny<Exception>(),
                 It.IsAny<Func<It.IsAnyType, Exception, string>>()),
             Times.Exactly(2));
