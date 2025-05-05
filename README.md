@@ -14,9 +14,9 @@ Before running the project, ensure you have the following installed:
 
 | Tool           | Version        | Purpose                                |
 |----------------|----------------|----------------------------------------|
-| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | 4.40+          | To run PostgreSQL, RabbitMQ, and containers |
 | [.NET SDK](https://dotnet.microsoft.com/download)               | 9.0           | To build and run CLI tools and services     |
 | [Git](https://git-scm.com/)                                     | Latest        | To clone the repository                     |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | 4.40+          | To run PostgreSQL, RabbitMQ, and containers |
 
 
 ---
