@@ -1,12 +1,23 @@
-# IpConnectTracker – Local Development Setup
+# Ip Connect Tracker – Local Development Setup
 
 This project uses Docker Compose to run:
 
 - PostgreSQL (with streaming replication: primary and replica)
 - RabbitMQ
 - Flyway for database migrations  
-- `WriterService`: a .NET Core backend that listens for incoming events and writes them to PostgreSQL
+- `WriterService`: a .NET backend that listens for incoming events and writes them to PostgreSQL
 - `ReaderService.Api`: a .NET Web API for querying connection history
+
+## 📦 Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+| Tool           | Version        | Purpose                                |
+|----------------|----------------|----------------------------------------|
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | 4.40+          | To run PostgreSQL, RabbitMQ, and containers |
+| [.NET SDK](https://dotnet.microsoft.com/download)               | 9.0           | To build and run CLI tools and services     |
+| [Git](https://git-scm.com/)                                     | Latest        | To clone the repository                     |
+
 
 ---
 
