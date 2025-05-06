@@ -88,7 +88,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();
-        var users = JsonSerializer.Deserialize<List<long>>(content)!;
+        var users = JsonSerializer.Deserialize<List<long>>(content);
 
         Assert.Single(users);
         Assert.Contains(1001, users);
