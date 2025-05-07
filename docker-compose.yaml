@@ -29,10 +29,8 @@ services:
     command: >
       postgres
       -c wal_level=replica
-      -c max_wal_senders=10
+      -c max_wal_senders=2
       -c wal_keep_size=64MB
-      -c archive_mode=on
-      -c archive_command='cd .'
 
   iptracker-db-replica:
     image: postgres:17.4
