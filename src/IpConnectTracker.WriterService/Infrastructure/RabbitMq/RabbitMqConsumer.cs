@@ -39,7 +39,7 @@ public class RabbitMqConsumer : AsyncDefaultBasicConsumer
             
             try
             {
-                await Channel.BasicNackAsync(deliveryTag, false, true, cancellationToken);
+                await Channel.BasicNackAsync(deliveryTag, false, false, cancellationToken);
             }
             catch (Exception nackEx)
             {
