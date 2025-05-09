@@ -55,3 +55,11 @@ nunit-*.xml
 
 .idea/
 *.DotSettings.user
+
+# Node / Vue / Vite frontend build & dev files
+**/node_modules/
+**/dist/
+**/.env.local
+**/.output/
+**/.vitepress/
+**/.cache/
