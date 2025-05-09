@@ -97,6 +97,16 @@ services:
       - iptracker-db-replica
     environment:
       Postgres__ConnectionString: Host=iptracker-db-replica;Port=5432;Database=iptracker;Username=app;Password=secret
+  
+  frontend-vue:
+    build:
+      context: ./frontend-vue
+      dockerfile: Dockerfile
+    container_name: iptracker-frontend-vue
+    ports:
+      - "5173:80"
+    depends_on:
+      - reader-service
 
 volumes:
   pgdata:
