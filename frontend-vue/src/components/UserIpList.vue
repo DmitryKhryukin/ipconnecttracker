@@ -11,7 +11,7 @@
 import { ref, watchEffect } from 'vue'
 import { getUserIps } from '../services/connectionEventsService'
 
-defineProps<{ userId: number }>()
+const { userId } = defineProps<{ userId: number }>()
 const ips = ref<string[]>([])
 
 watchEffect(async () => {

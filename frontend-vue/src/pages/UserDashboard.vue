@@ -32,11 +32,11 @@
               {{ selectedUserId === userId ? 'Hide' : 'Show' }} IPs
             </button>
           </td>
-        </tr>
-        <tr v-if="selectedUserId === userId" class="bg-gray-50">
+          <tr v-if="selectedUserId === userId" class="bg-gray-50">
           <td colspan="3">
-            <!--<UserIpList :userId="user.id" />-->
+            <UserIpList :userId="userId"/>
           </td>
+        </tr>
         </tr>
       </tbody>
     </table>
@@ -51,12 +51,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getUserConnectionsByIpPrefix } from '../services/connectionEventService'
-/*import UserLastSeen from '@/components/UserLastSeen.vue'
-import UserIpList from '@/components/UserIpList.vue'*/
+import { getUserConnectionsByIpPrefix } from '../services/connectionEventsService'
+/*import UserLastSeen from '../components/UserLastSeen.vue'*/
+import UserIpList from '../components/UserIpList.vue'
 
 const prefix = ref('192.')
-const userIds = ref<{ id: number }[]>([])
+const userIds = ref<number[]>([])
 const selectedUserId = ref<number | null>(null)
 
 const skip = ref(0)
