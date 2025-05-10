@@ -13,7 +13,7 @@
       <button @click="search" class="bg-blue-600 text-white px-4 py-1 rounded">Search</button>
     </div>
 
-    <table v-if="users.length" class="table-auto w-full border-collapse border mb-4">
+    <table v-if="userIds.length" class="table-auto w-full border-collapse border mb-4">
       <thead>
         <tr>
           <th class="border px-2 py-1">User ID</th>
@@ -22,18 +22,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td class="border px-2 py-1">{{ user.id }}</td>
+        <tr v-for="userId in userIds" :key="userId">
+          <td class="border px-2 py-1">{{ userId }}</td>
           <td class="border px-2 py-1">
             <!--<UserLastSeen :userId="user.id" />-->
           </td>
           <td class="border px-2 py-1">
-            <button @click="toggle(user.id)" class="text-blue-600 underline">
-              {{ selectedUserId === user.id ? 'Hide' : 'Show' }} IPs
+            <button @click="toggle(userId)" class="text-blue-600 underline">
+              {{ selectedUserId === userId ? 'Hide' : 'Show' }} IPs
             </button>
           </td>
         </tr>
-        <tr v-if="selectedUserId === user.id" class="bg-gray-50">
+        <tr v-if="selectedUserId === userId" class="bg-gray-50">
           <td colspan="3">
             <!--<UserIpList :userId="user.id" />-->
           </td>
@@ -41,7 +41,7 @@
       </tbody>
     </table>
 
-    <div v-if="users.length" class="flex gap-2">
+    <div v-if="userIds.length" class="flex gap-2">
       <button :disabled="skip === 0" @click="prev">Prev</button>
       <span>Showing {{ skip + 1 }} - {{ skip + take }}</span>
       <button @click="next">Next</button>
@@ -51,12 +51,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getUserConnectionsByIpPrefix } from '../services/userService'
+import { getUserConnectionsByIpPrefix } from '../services/connectionEventService'
 /*import UserLastSeen from '@/components/UserLastSeen.vue'
 import UserIpList from '@/components/UserIpList.vue'*/
 
 const prefix = ref('192.')
-const users = ref<{ id: number }[]>([])
+const userIds = ref<{ id: number }[]>([])
 const selectedUserId = ref<number | null>(null)
 
 const skip = ref(0)
@@ -64,7 +64,7 @@ const take = 20
 
 async function search() {
   skip.value = 0
-  users.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
+  userIds.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
   selectedUserId.value = null
 }
 
@@ -74,13 +74,13 @@ function toggle(userId: number) {
 
 async function next() {
   skip.value += take
-  users.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
+  userIds.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
 }
 
 async function prev() {
   if (skip.value >= take) {
     skip.value -= take
-    users.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
+    userIds.value = await getUserConnectionsByIpPrefix(prefix.value, skip.value, take)
   }
 }
 </script>
