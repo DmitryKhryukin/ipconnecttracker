@@ -32,14 +32,22 @@ docker compose up --build
 
 # Or build and start containers in the background
 docker compose up --build -d
+
+# rebuild a particular service if it's cached (e.g. reader-service)
+docker compose build --no-cache <service name>
 ```
 
 ## For development
 
-
 ```bash
 # run everything but frontend in docker
+docker compose --profile backend up --build
+
+# or run everything but frontend in docker in background
 docker compose --profile backend up --build -d
+
+# or run everything without build if no need
+docker compose --profile backend up
 
 # run frontend separately
 cd frontend-vue
@@ -51,6 +59,9 @@ docker compose --profile backend stop
 
 # cleaning
 docker compose --profile backend down -v
+
+# rebuild a particular service if it's cached (e.g. reader-service)
+docker compose build --no-cache <service name>
 ```
 
 ---
