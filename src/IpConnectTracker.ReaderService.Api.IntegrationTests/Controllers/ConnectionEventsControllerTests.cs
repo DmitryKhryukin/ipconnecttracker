@@ -117,7 +117,7 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         })!;
 
         Assert.Equal(expected.IpAddress, dto.Ip);
-        Assert.Equal(expected.LastConnected, dto.ConnectedAt);
+        Assert.Equal(expected.LastConnected, dto.Timestamp);
     }
 
     [Fact]

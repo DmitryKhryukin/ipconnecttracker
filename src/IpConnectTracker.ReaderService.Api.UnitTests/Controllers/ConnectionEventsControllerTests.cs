@@ -90,7 +90,7 @@ public class ConnectionEventsControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result);
         var dto = Assert.IsType<UserConnectionDto>(okResult.Value);
         Assert.Equal(ip, dto.Ip);
-        Assert.Equal(timestamp, dto.ConnectedAt);
+        Assert.Equal(timestamp, dto.Timestamp);
     }
 
     [Fact]
