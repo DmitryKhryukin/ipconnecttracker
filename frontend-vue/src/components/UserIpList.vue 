@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <h4>User {{ userId }}'s IPs</h4>
+    <ul>
+      <li v-for="ip in ips" :key="ip">{{ ip }}</li>
+    </ul>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, watchEffect } from 'vue'
+import { getUserIps } from '../services/connectionEventsService'
+
+defineProps<{ userId: number }>()
+const ips = ref<string[]>([])
+
+watchEffect(async () => {
+  ips.value = await getUserIps(userId)
+})
+</script>
