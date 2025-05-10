@@ -11,6 +11,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    profiles: ["backend"]
 
   postgres:
     image: postgres:17.4
@@ -31,6 +32,7 @@ services:
       -c wal_level=replica
       -c max_wal_senders=2
       -c wal_keep_size=64MB
+    profiles: ["backend"]
 
   iptracker-db-replica:
     image: postgres:17.4
@@ -54,6 +56,7 @@ services:
     "]
     volumes:
       - pgdata-replica:/var/lib/postgresql/data
+    profiles: ["backend"]
 
   flyway:
     image: flyway/flyway:11.8
@@ -67,6 +70,7 @@ services:
       -user=app
       -password=secret
       migrate
+    profiles: ["backend"]
 
   writer-service:
     build:
@@ -85,6 +89,7 @@ services:
       Rabbit__UserName: guest
       Rabbit__Password: guest
       Postgres__ConnectionString: Host=iptracker-db;Port=5432;Database=iptracker;Username=app;Password=secret
+    profiles: ["backend"]
 
   reader-service:
     build:
@@ -97,6 +102,7 @@ services:
       - iptracker-db-replica
     environment:
       Postgres__ConnectionString: Host=iptracker-db-replica;Port=5432;Database=iptracker;Username=app;Password=secret
+    profiles: ["backend"]
   
   frontend-vue:
     build:
@@ -107,6 +113,7 @@ services:
       - "5173:80"
     depends_on:
       - reader-service
+    profiles: ["frontend"]
 
 volumes:
   pgdata:

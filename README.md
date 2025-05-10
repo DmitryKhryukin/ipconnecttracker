@@ -34,6 +34,25 @@ docker compose up --build
 docker compose up --build -d
 ```
 
+## For development
+
+
+```bash
+# run everything but frontend in docker
+docker compose --profile backend up --build -d
+
+# run frontend separately
+cd frontend-vue
+npm install
+npm run dev
+
+# stop conteiners
+docker compose --profile backend stop
+
+# cleaning
+docker compose --profile backend down -v
+```
+
 ---
 
 ## Potential Issues
