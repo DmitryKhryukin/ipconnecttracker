@@ -25,7 +25,7 @@
         <tr v-for="userId in userIds" :key="userId">
           <td class="border px-2 py-1">{{ userId }}</td>
           <td class="border px-2 py-1">
-            <!--<UserLastSeen :userId="user.id" />-->
+            <UserLastSeen :userId="userId" />
           </td>
           <td class="border px-2 py-1">
             <button @click="toggle(userId)" class="text-blue-600 underline">
@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getUserConnectionsByIpPrefix } from '../services/connectionEventsService'
-/*import UserLastSeen from '../components/UserLastSeen.vue'*/
+import UserLastSeen from '../components/UserLastSeen.vue'
 import UserIpList from '../components/UserIpList.vue'
 
 const prefix = ref('192.')
