@@ -21,6 +21,7 @@ public class PostgresWithFlywayFixture : IAsyncLifetime
     {
         Network = new NetworkBuilder()
             .WithName("postgres-test-network")
+            .WithCleanUp(true) 
             .Build();
 
         PostgresContainer = new ContainerBuilder()
