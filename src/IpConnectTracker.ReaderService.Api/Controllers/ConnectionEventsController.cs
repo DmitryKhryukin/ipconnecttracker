@@ -48,7 +48,24 @@ public class ConnectionEventsController : ControllerBase
             return NotFound();
         }
 
-        var result = new UserConnectionDto(latestConnection.Value.ip, latestConnection.Value.timestamp);
+        var result = new UserConnectionDto(userId, latestConnection.Value.ip, latestConnection.Value.timestamp);
+
+        return Ok(result);
+    }
+    
+    [HttpGet("users/latest")]
+    public async Task<IActionResult> GetUsersLastConnections([FromQuery] long[] userIds)
+    {
+        if (userIds == null || userIds.Length == 0)
+        {
+            return BadRequest("At least one userId must be specified.");
+        }
+
+        var connections = await _repository.GetUsersLastConnectionsAsync(userIds);
+
+        var result = connections
+            .Select(x => new UserConnectionDto(x.userId, x.ip, x.timestamp))
+            .ToList();
 
         return Ok(result);
     }

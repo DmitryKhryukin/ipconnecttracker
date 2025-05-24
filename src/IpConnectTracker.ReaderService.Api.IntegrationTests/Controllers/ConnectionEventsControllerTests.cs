@@ -168,4 +168,54 @@ public class ConnectionEventsControllerTests : IClassFixture<PostgresWithFlywayF
         Assert.Contains("Invalid IP address format", content);
     }
 
+    [Fact]
+    public async Task GetUsersLastConnections_MultipleUsers_ShouldReturnLatestConnectionsForEachUser()
+    {
+        var url = "/api/connection-events/users/latest?userIds=1001&userIds=2002";
+        var response = await _client.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var results = JsonSerializer.Deserialize<List<UserConnectionDto>>(content, options);
+        
+        Assert.Equal(2, results.Count);
+
+        var user1001 = results.FirstOrDefault(r => r.UserId == 1001);
+        Assert.NotNull(user1001);
+        Assert.Equal("127.0.0.1", user1001.Ip);
+        Assert.Equal(new DateTime(2025, 01, 01, 12, 00, 00, DateTimeKind.Utc), user1001.Timestamp);
+
+        var user2002 = results.FirstOrDefault(r => r.UserId == 2002);
+        Assert.NotNull(user2002);
+        Assert.Equal("10.0.0.1", user2002!.Ip);
+        Assert.Equal(new DateTime(2025, 01, 01, 11, 50, 00, DateTimeKind.Utc), user2002.Timestamp);
+    }
+
+    [Fact]
+    public async Task GetUsersLastConnections_UnknownUser_ShouldReturnOnlyKnownUsers()
+    {
+        var url = "/api/connection-events/users/latest?userIds=1001&userIds=9999";
+        var response = await _client.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var results = JsonSerializer.Deserialize<List<UserConnectionDto>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        Assert.Single(results);
+        Assert.Equal(1001, results[0].UserId);
+    }
+    
+    [Fact]
+    public async Task GetUsersLastConnections_MissingUserIds_ShouldReturnBadRequest()
+    {
+        var response = await _client.GetAsync("/api/connection-events/users/latest");
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var content = await response.Content.ReadAsStringAsync();
+        Assert.Contains("userId", content, StringComparison.OrdinalIgnoreCase);
+    }
 }

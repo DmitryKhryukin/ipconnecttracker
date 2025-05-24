@@ -1,3 +1,3 @@
 namespace IpConnectTracker.ReaderService.Api.Model;
 
-public record UserConnectionDto(string Ip, DateTime Timestamp);
+public record UserConnectionDto(long UserId, string Ip, DateTime Timestamp);
