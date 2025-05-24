@@ -19,3 +19,11 @@ export async function getLatestConnectionByUserAndIp(userId: number, ip: string)
   const response = await api.get(`api/connection-events/users/${userId}/latest-by-ip`, { params: { ip } })
   return response.data
 }
+
+export async function getUsersLastConnections(userIds: number[]) {
+  const params = new URLSearchParams()
+  userIds.forEach(id => params.append('userIds', id.toString()))
+
+  const response = await api.get(`api/connection-events/users/latest`, { params })
+  return response.data
+}
